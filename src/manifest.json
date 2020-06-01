@@ -3,10 +3,12 @@
     "requires": {
         "cockpit": "137"
     },
+    "name": "samba-ad-dc",
+    "content-security-policy": "default-src: self; connect-src: self; style-src 'self' 'unsafe-inline';",
 
     "tools": {
         "index": {
-            "label": "Starter Kit"
+            "label": "Samba AD DC"
         }
     }
 }

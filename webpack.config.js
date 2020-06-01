@@ -4,9 +4,10 @@ const extract = require("mini-css-extract-plugin");
 const fs = require("fs");
 const webpack = require("webpack");
 const CompressionPlugin = require("compression-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 var externals = {
-    "cockpit": "cockpit",
+    cockpit: "cockpit",
 };
 
 /* These can be overridden, typically from the Makefile.am */
@@ -21,12 +22,28 @@ var production = process.env.NODE_ENV === 'production';
 
 var info = {
     entries: {
-        "index": [
+        index: [
             "./index.js"
+        ],
+
+        "computer/index": [
+            "./computer/index.js"
+        ],
+
+        "domain/index": [
+            "./domain/index.js"
+        ],
+
+        "contact/index": [
+            "./contact/index.js"
         ]
     },
     files: [
+        "css",
         "index.html",
+        "computer/index.html",
+        "domain/index.html",
+        "contact/index.html",
         "manifest.json",
     ],
 };
@@ -79,7 +96,8 @@ info.files = files;
 
 var plugins = [
     new copy(info.files),
-    new extract({filename: "[name].css"})
+    new extract({ filename: "[name].css" }),
+    new MiniCssExtractPlugin()
 ];
 
 /* Only minimize when in production mode */
@@ -100,18 +118,18 @@ var babel_loader = {
     options: {
         presets: [
             ["@babel/env", {
-                "targets": {
-                    "chrome": "57",
-                    "firefox": "52",
-                    "safari": "10.3",
-                    "edge": "16",
-                    "opera": "44"
+                targets: {
+                    chrome: "57",
+                    firefox: "52",
+                    safari: "10.3",
+                    edge: "16",
+                    opera: "44"
                 }
             }],
             "@babel/preset-react"
         ]
     }
-}
+};
 
 module.exports = {
     mode: production ? 'production' : 'development',
@@ -133,8 +151,7 @@ module.exports = {
                 test: /\.(js|jsx)$/
             },
             {
-                exclude: /node_modules/,
-                test: /\.scss$/,
+                test: /\.(scss|css)$/,
                 use: [
                     extract.loader,
                     {
@@ -145,8 +162,19 @@ module.exports = {
                         loader: 'sass-loader',
                     }
                 ]
+            },
+            {
+                test: /\.(png|jpg|gif)$/i,
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            limit: 8192
+                        }
+                    }
+                ]
             }
         ]
     },
     plugins: plugins
-}
+};
