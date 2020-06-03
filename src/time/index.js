@@ -15,33 +15,10 @@ import {
     Spinner
 } from '@patternfly/react-core';
 import './css/time.css';
-
-const RenderError = (props) => {
-    const hideAlert = props.hideAlert;
-    if (props.alertVisible) {
-        return (
-            <Alert
-            variant="danger"
-            title="An Error Occurred"
-            action={<AlertActionCloseButton onClose={hideAlert} />}
-            >
-                {props.error}
-            </Alert>
-        );
-    }
-    return <div />;
-};
-
-const Loading = (props) => {
-    if (props.loading) {
-        return (
-            <div>
-                <Spinner />
-            </div>
-        );
-    }
-    return <div />;
-};
+import {
+    RenderError,
+    Loading
+} from '../common';
 
 export default function ServerTime() {
     const [serverTime, setServerTime] = useState();
