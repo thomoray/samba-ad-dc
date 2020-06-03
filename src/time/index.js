@@ -9,10 +9,7 @@ import {
     Card,
     CardBody,
     CardHeader,
-    Alert,
-    AlertActionCloseButton,
     ActionGroup,
-    Spinner
 } from '@patternfly/react-core';
 import './css/time.css';
 import {
