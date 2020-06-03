@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Info from './info';
 
-export default function TestComputer() {
+export default function Domain() {
     return (
         <>
             <Info />
@@ -11,5 +11,5 @@ export default function TestComputer() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    ReactDOM.render(<TestComputer />, document.getElementById("domain"));
+    ReactDOM.render(<Domain />, document.getElementById("domain"));
 });

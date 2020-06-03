@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import cockpit from 'cockpit';
 
 export default function Computer() {
     return (

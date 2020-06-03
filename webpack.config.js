@@ -27,7 +27,7 @@ var info = {
         ],
 
         "computer/index": [
-            "./computer/index.js"
+            "./computer/index.js",
         ],
 
         "domain/index": [
@@ -36,14 +36,19 @@ var info = {
 
         "contact/index": [
             "./contact/index.js"
+        ],
+
+        "time/index": [
+            "./time/index.js"
         ]
     },
     files: [
         "css",
         "index.html",
-        "computer/index.html",
-        "domain/index.html",
-        "contact/index.html",
+        "computer/computer.html",
+        "domain/domain.html",
+        "contact/contact.html",
+        "time/time.html",
         "manifest.json",
     ],
 };
@@ -157,6 +162,9 @@ module.exports = {
                     {
                         loader: 'css-loader',
                         options: { url: false }
+                    },
+                    {
+                        loader: 'resolve-url-loader'
                     },
                     {
                         loader: 'sass-loader',
