@@ -21,6 +21,22 @@ export const RenderError = (props) => {
     return <div />;
 };
 
+export const Success = (props) => {
+    const hideAlert = props.hideAlert;
+    if (props.alertVisible) {
+        return (
+            <Alert
+            variant="success"
+            title="Success"
+            action={<AlertActionCloseButton onClose={hideAlert} />}
+            >
+                {props.message}
+            </Alert>
+        );
+    }
+    return <div />;
+};
+
 export const Loading = (props) => {
     if (props.loading) {
         return (
