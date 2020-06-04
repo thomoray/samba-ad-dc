@@ -1,65 +1,54 @@
-import React, { useState } from 'react';
-import {
-    Table,
-    TableHeader,
-    TableBody,
-    textCenter,
-} from '@patternfly/react-table';
+import React, { useState, useEffect } from 'react';
+import cockpit from 'cockpit';
+import { Loading, RenderError } from '../common';
 import {
     Card,
     CardBody,
+    CardFooter,
+    CardHeader
 } from '@patternfly/react-core';
-// import './computer.css';
+import './css/computer.css';
 
 function ComputerList() {
-    const [columns, setColumns] = useState([
-        { title: 'Repositories' },
-        'Branches',
-        { title: 'Pull requests' },
-        'Workspaces',
-        {
-            title: 'Last Commit',
-            transforms: [textCenter],
-            cellTransforms: [textCenter]
-        }
-    ]);
-    const [rows, setRows] = useState([
-        {
-            cells: ['one', 'two', 'three', 'four', 'five']
-        },
-        {
-            cells: [
-                {
-                    title: <div>one - 2</div>,
-                    props: { title: 'hover title', colSpan: 3 }
-                },
-                'four - 2',
-                'five - 2'
-            ]
-        },
-        {
-            cells: [
-                'one - 3',
-                'two - 3',
-                'three - 3',
-                'four - 3',
-                {
-                    title: 'five - 3 (not centered)',
-                    props: { textCenter: false }
-                }
-            ]
-        }
-    ]);
+    const [list, setList] = useState();
+    const [error, setError] = useState();
+    const [loading, setLoading] = useState(true);
+    const [alertVisible, setAlertVisible] = useState(false);
+
+    const hideAlert = () => {
+        setAlertVisible(false);
+    };
+
+    useEffect(() => {
+        const command = `samba-tool computer list`;
+        const script = () => cockpit.script(command, { superuser: true, err: 'message' })
+                .done((data) => {
+                    setList(data);
+                    setLoading(false);
+                })
+                .catch((exception) => {
+                    setError(exception.message);
+                    setAlertVisible(true);
+                    setLoading(false);
+                });
+        script();
+    }, []);
 
     return (
         <>
-            <Table aria-label="Computers List" cells={columns} rows={rows}>
-                <TableHeader />
-                <TableBody />
-            </Table>
-            <Card isHoverable>
-                <CardBody>Card Body</CardBody>
-            </Card>
+            <div>
+                <h3 className="list-computer-heading">Computers in AD DC</h3>
+                <Card>
+                    <CardHeader>Computer List</CardHeader>
+                    <CardBody>
+                        <Loading loading={loading} />
+                        <p>{list}</p>
+                    </CardBody>
+                    <CardFooter>
+                        <RenderError hideAlert={hideAlert} error={error} alertVisible={alertVisible} />
+                    </CardFooter>
+                </Card>
+            </div>
         </>
     );
 }
