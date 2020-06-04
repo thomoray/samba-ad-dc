@@ -67,7 +67,7 @@ export default function ServerTime() {
                             aria-describedby="horizontal-form-server-helper"
                             name="horizontal-form-server"
                             onChange={handleServerChange}
-                            placeholder="samdom.example.com"
+                            placeholder="127.0.0.1"
                         />
                     </FormGroup>
                     <ActionGroup>
