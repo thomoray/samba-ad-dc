@@ -37,13 +37,11 @@ export default function Create() {
         const command = `samba-tool computer create ${computerName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
-                    console.log(data);
                     setSuccessMessage(data);
                     setSuccessAlertVisible(true);
                     setLoading(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     setErrorMessage(exception.message);
                     setErrorAlertVisible(true);
                     setLoading(false);

@@ -14,7 +14,7 @@ import {
 import cockpit from 'cockpit';
 import './css/computer.css';
 
-export default function Create() {
+export default function Delete() {
     const [computerName, setComputerName] = useState();
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
