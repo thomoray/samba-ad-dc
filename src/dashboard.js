@@ -28,6 +28,11 @@ export default function Dashboard() {
                                 <CardBody>Contact Management</CardBody>
                             </Card>
                         </a>
+                        <a href="sites/sites.html" role="link">
+                            <Card isHoverable>
+                                <CardBody>Sites Management</CardBody>
+                            </Card>
+                        </a>
                         <a href="time/time.html" role="link">
                             <Card isHoverable>
                                 <CardBody>Time</CardBody>
