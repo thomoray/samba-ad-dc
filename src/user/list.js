@@ -7,7 +7,7 @@ import {
 import { Loading, RenderError } from '../common';
 
 export default function List() {
-    const [users, setUsers] = useState();
+    const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
     const [alertVisible, setAlertVisible] = useState(false);
