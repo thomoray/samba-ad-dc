@@ -23,10 +23,10 @@ export default function List() {
         const command = `samba-tool user list`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
-                    setUsers(data);
                     const splitData = data.split('\n');
-                    console.log(splitData);
-                    console.log(typeof splitData);
+                    // console.log(splitData);
+                    // console.log(typeof splitData);
+                    setUsers(splitData);
                     setLoading(false);
                 })
                 .catch((exception) => {
