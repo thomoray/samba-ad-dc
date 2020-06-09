@@ -44,6 +44,10 @@ var info = {
 
         "sites/index": [
             "./sites/index.js"
+        ],
+
+        "user/index": [
+            "./user/index.js"
         ]
     },
     files: [
@@ -54,6 +58,7 @@ var info = {
         "contact/contact.html",
         "time/time.html",
         "sites/sites.html",
+        "user/user.html",
         "manifest.json",
     ],
 };
