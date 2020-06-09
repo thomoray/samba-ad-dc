@@ -12,6 +12,8 @@ export default function List() {
     const [error, setError] = useState();
     const [alertVisible, setAlertVisible] = useState(false);
 
+    const listUsers = users.map((user) => <li key={user.toString()}>{user}</li>);
+
     const hideAlert = () => {
         setAlertVisible(false);
     };
@@ -40,7 +42,7 @@ export default function List() {
                 <CardBody>
                     <Loading loading={loading} />
                     <RenderError error={error} hideAlert={hideAlert} isAlertVisible={alertVisible} />
-                    {users}
+                    {listUsers}
                 </CardBody>
             </Card>
         </>
