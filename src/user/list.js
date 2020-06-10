@@ -22,8 +22,6 @@ export default function List() {
         setSearchValue(newValue);
     };
 
-    // const listUsers = users.map((user) => <li key={user.toString()}>{user}</li>);
-
     const filteredList = users.filter((name) => name.includes(searchValue)).map(filteredName =>
         <li key={filteredName.toString()}>
             {filteredName}
@@ -39,8 +37,7 @@ export default function List() {
         const command = `samba-tool user list`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
-                    const lowerData = data.toLowerCase();
-                    const splitData = lowerData.split(' \n ');
+                    const splitData = data.split('\n');
                     const sortedData = splitData.sort();
                     setUsers(sortedData);
                     setLoading(false);
@@ -76,7 +73,6 @@ export default function List() {
                         hideAlert={hideAlert}
                         isAlertVisible={alertVisible}
                     />
-                    {/* {listUsers} */}
                     {filteredList}
                 </CardBody>
             </Card>
