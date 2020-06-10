@@ -16,6 +16,7 @@ import {
 export default function Create(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
     const [userou, setUserou] = useState();
     const [surname, setSurname] = useState();
     const [initials, setInitials] = useState();
@@ -35,8 +36,8 @@ export default function Create(props) {
     const [nisDomain, setNisDomain] = useState();
     const [unixHome, setUnixHome] = useState();
     const [uid, setUid] = useState();
-    const [uidNumber, setUidNumber] = useState();
-    const [gidNumber, setGidNumber] = useState();
+    const [uidNumber, setUidNumber] = useState(0);
+    const [gidNumber, setGidNumber] = useState(0);
     const [gecos, setGecos] = useState();
     const [loginShell, setLoginShell] = useState();
 
@@ -56,6 +57,10 @@ export default function Create(props) {
 
     const handleUsernameInputChange = (value) => {
         setUsername(value);
+    };
+
+    const handlePasswordInputChange = (value) => {
+        setPassword(value);
     };
 
     const handleUserouInputChange = (value) => {
@@ -162,7 +167,7 @@ export default function Create(props) {
         const command = `
             samba-tool user create \
                     ${username} \
-                    --random-password \
+                    ${password} \
                     --must-change-at-next-login \
                     --userou=${userou} \
                     --surname=${surname} \
@@ -210,6 +215,8 @@ export default function Create(props) {
             <Button variant="primary" onClick={handleModalToggle}>
                 Create User
             </Button>
+            <RenderError key="error" error={errorMessage} hideAlert={hideErrorAlert} isAlertVisible={errorAlertVisible} />,
+            <Success key="success" message={successMessage} hideAlert={hideSuccessAlert} isAlertVisible={successAlertVisible} />
             <Modal
                 title="Create A New User"
                 isOpen={isModalOpen}
@@ -222,9 +229,7 @@ export default function Create(props) {
                     </Button>,
                     <Button key="cancel" variant="link" onClick={handleModalToggle}>
                         Cancel
-                    </Button>,
-                    <RenderError key="error" error={errorMessage} hideAlert={hideErrorAlert} isAlertVisible={errorAlertVisible} />,
-                    <Success key="success" message={successMessage} hideAlert={hideSuccessAlert} isAlertVisible={successAlertVisible} />
+                    </Button>
                 ]}
                 isFooterLeftAligned
                 appendTo={document.body}
@@ -242,6 +247,21 @@ export default function Create(props) {
                             name="horizontal-form-username"
                             onChange={handleUsernameInputChange}
                             placeholder="User1"
+                        />
+                    </FormGroup>
+                    <FormGroup
+                        label="Password"
+                        isRequired
+                        fieldId="horizontal-form-password"
+                    >
+                        <TextInput
+                            value={password}
+                            type="text"
+                            id="horizontal-form-password"
+                            aria-describedby="horizontal-form-password-helper"
+                            name="horizontal-form-password"
+                            onChange={handlePasswordInputChange}
+                            placeholder="PassW0rd!"
                         />
                     </FormGroup>
                     <FormGroup
