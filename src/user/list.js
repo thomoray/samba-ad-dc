@@ -19,7 +19,7 @@ export default function List() {
     const [searchValue, setSearchValue] = useState("");
 
     const onSearchInputChange = (newValue) => {
-        setSearchValue(newValue);
+        setSearchValue(newValue).toLowerCase();
     };
 
     // const listUsers = users.map((user) => <li key={user.toString()}>{user}</li>);
@@ -39,8 +39,10 @@ export default function List() {
         const command = `samba-tool user list`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
-                    const splitData = data.split('\n');
-                    setUsers(splitData);
+                    const lowerData = data.toLowerCase();
+                    const splitData = lowerData.split(' \n ');
+                    const sortedData = splitData.sort();
+                    setUsers(sortedData);
                     setLoading(false);
                 })
                 .catch((exception) => {
@@ -60,7 +62,7 @@ export default function List() {
                     value={searchValue}
                 />
                 <Button
-                    variant={ButtonVariant.control} 
+                    variant={ButtonVariant.control}
                     aria-label="search button for search users"
                 >
                     <SearchIcon />
