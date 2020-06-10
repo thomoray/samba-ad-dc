@@ -164,29 +164,29 @@ export default function Create(props) {
                     ${username} \
                     --random-password \
                     --must-change-at-next-login \
-                    --userou ${userou} \
-                    --surname ${surname} \
-                    --given-name ${givenName} \
-                    --initials ${initials} \
-                    --profile-path ${profilePath} \
-                    --script-path ${scriptPath} \
-                    --home-drive ${homeDrive} \
-                    --home-directory ${homeDirectory} \
-                    --job-title ${jobTitle} \
-                    --department ${department} \
-                    --company ${company} \
-                    --description ${description} \
-                    --mail-address ${mailAddress} \
-                    --internet-address ${internetAddress} \
-                    --telephone-number ${telephoneNumber} \
-                    --physical-delivery-office ${physicalDeliveryOffice} \
-                    --nis-domain ${nisDomain} \
-                    --unix-home ${unixHome} \
-                    --uid ${uid} \
-                    --uid-number ${uidNumber} \
-                    --gid-number ${gidNumber} \
-                    --gecos ${gecos} \
-                    --login-shell ${loginShell} \
+                    --userou=${userou} \
+                    --surname=${surname} \
+                    --given-name=${givenName} \
+                    --initials=${initials} \
+                    --profile-path=${profilePath} \
+                    --script-path=${scriptPath} \
+                    --home-drive=${homeDrive} \
+                    --home-directory=${homeDirectory} \
+                    --job-title=${jobTitle} \
+                    --department=${department} \
+                    --company=${company} \
+                    --description=${description} \
+                    --mail-address=${mailAddress} \
+                    --internet-address=${internetAddress} \
+                    --telephone-number=${telephoneNumber} \
+                    --physical-delivery-office=${physicalDeliveryOffice} \
+                    --nis-domain=${nisDomain} \
+                    --unix-home=${unixHome} \
+                    --uid=${uid} \
+                    --uid-number=${uidNumber} \
+                    --gid-number=${gidNumber} \
+                    --gecos=${gecos} \
+                    --login-shell=${loginShell} \
             `;
         const script = () => cockpit.script(command, { superuser: true, err: "message" })
                 .done((data) => {
