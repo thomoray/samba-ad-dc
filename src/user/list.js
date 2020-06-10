@@ -3,16 +3,32 @@ import cockpit from 'cockpit';
 import {
     Card,
     CardBody,
+    Button,
+    ButtonVariant,
+    InputGroup,
+    TextInput
 } from '@patternfly/react-core';
 import { Loading, RenderError } from '../common';
+import { SearchIcon } from '@patternfly/react-icons';
 
 export default function List() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
     const [alertVisible, setAlertVisible] = useState(false);
+    const [searchValue, setSearchValue] = useState("");
 
-    const listUsers = users.map((user) => <li key={user.toString()}>{user}</li>);
+    const onSearchInputChange = (newValue) => {
+        setSearchValue(newValue);
+    };
+
+    // const listUsers = users.map((user) => <li key={user.toString()}>{user}</li>);
+
+    const filteredList = users.filter((name) => name.includes(searchValue)).map(filteredName =>
+        <li key={filteredName.toString()}>
+            {filteredName}
+        </li>
+    );
 
     const hideAlert = () => {
         setAlertVisible(false);
@@ -24,13 +40,10 @@ export default function List() {
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     const splitData = data.split('\n');
-                    // console.log(splitData);
-                    // console.log(typeof splitData);
                     setUsers(splitData);
                     setLoading(false);
                 })
                 .catch((exception) => {
-                    console.log('Exception reached');
                     setError(exception.message);
                     setLoading(false);
                 });
@@ -38,11 +51,31 @@ export default function List() {
     }, []);
     return (
         <>
+            <InputGroup>
+                <TextInput
+                    name="textInput2"
+                    id="textInput2" type="search"
+                    aria-label="search users"
+                    onChange={onSearchInputChange}
+                    value={searchValue}
+                />
+                <Button
+                    variant={ButtonVariant.control} 
+                    aria-label="search button for search users"
+                >
+                    <SearchIcon />
+                </Button>
+            </InputGroup>
             <Card>
                 <CardBody>
                     <Loading loading={loading} />
-                    <RenderError error={error} hideAlert={hideAlert} isAlertVisible={alertVisible} />
-                    {listUsers}
+                    <RenderError
+                        error={error}
+                        hideAlert={hideAlert}
+                        isAlertVisible={alertVisible}
+                    />
+                    {/* {listUsers} */}
+                    {filteredList}
                 </CardBody>
             </Card>
         </>
