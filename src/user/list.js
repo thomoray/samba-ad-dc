@@ -19,7 +19,7 @@ export default function List() {
     const [searchValue, setSearchValue] = useState("");
 
     const onSearchInputChange = (newValue) => {
-        setSearchValue(newValue).toLowerCase();
+        setSearchValue(newValue);
     };
 
     // const listUsers = users.map((user) => <li key={user.toString()}>{user}</li>);
