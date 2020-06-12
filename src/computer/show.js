@@ -40,7 +40,8 @@ export default function Show() {
         const command = `samba-tool computer show ${computerName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
-                    setComputerAdObject(data);
+                    const splitRes = data.split('\n');
+                    setComputerAdObject(splitRes);
                     setLoading(false);
                 })
                 .catch((exception) => {
