@@ -28,6 +28,8 @@ export default function Show() {
         setAlertVisible(false);
     };
 
+    const objectList = () => computerAdObject.map((obj) => <div key={obj.toString()}>{obj}</div>);
+
     const handleComputerNameChange = (e) => {
         setComputerName(e);
     };
@@ -78,7 +80,7 @@ export default function Show() {
                 <CardHeader>Computer's AD Object Response</CardHeader>
                 <CardBody>
                     <Loading loading={loading} />
-                    <div>{computerAdObject}</div>
+                    {objectList}
                 </CardBody>
                 <CardFooter>
                     <RenderError hideAlert={hideAlert} error={error} alertVisible={alertVisible} />
