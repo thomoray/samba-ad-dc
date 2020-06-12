@@ -215,8 +215,8 @@ export default function Create(props) {
             <Button variant="primary" onClick={handleModalToggle}>
                 Create User
             </Button>
-            <RenderError key="error" error={errorMessage} hideAlert={hideErrorAlert} isAlertVisible={errorAlertVisible} />,
-            <Success key="success" message={successMessage} hideAlert={hideSuccessAlert} isAlertVisible={successAlertVisible} />
+            <RenderError error={errorMessage} hideAlert={hideErrorAlert} isAlertVisible={errorAlertVisible} />,
+            <Success message={successMessage} hideAlert={hideSuccessAlert} isAlertVisible={successAlertVisible} />
             <Modal
                 title="Create A New User"
                 isOpen={isModalOpen}
