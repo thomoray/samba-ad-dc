@@ -15,7 +15,7 @@ import cockpit from 'cockpit';
 import './index.css';
 
 export default function CreateSite() {
-    const [siteName, setSiteName] = useState();
+    const [siteName, setSiteName] = useState("");
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
     const [errorAlertVisible, setErrorAlertVisible] = useState(false);

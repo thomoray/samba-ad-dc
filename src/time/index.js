@@ -19,7 +19,7 @@ import {
 
 export default function ServerTime() {
     const [serverTime, setServerTime] = useState();
-    const [server, setServer] = useState();
+    const [server, setServer] = useState("");
     const [error, setError] = useState();
     const [alertVisible, setAlertVisible] = useState(false);
     const [loading, setLoading] = useState(false);

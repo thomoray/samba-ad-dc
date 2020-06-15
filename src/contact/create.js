@@ -15,9 +15,9 @@ import { Loading, RenderError, Success } from '../common';
 import './index.css';
 
 export default function CreateContact() {
-    const [givenName, setGivenName] = useState();
-    const [initials, setInitials] = useState();
-    const [surname, setSurname] = useState();
+    const [givenName, setGivenName] = useState("");
+    const [initials, setInitials] = useState("");
+    const [surname, setSurname] = useState("");
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
     const [errorAlertVisible, setErrorMessageVisible] = useState(false);

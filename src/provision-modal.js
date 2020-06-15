@@ -39,9 +39,9 @@ function ProvisionModal() {
     const [domain, setDomain] = useState('');
     const [serverRole, setServerRole] = useState(serverRoleOptions[0].value);
     const [dnsBackend, setDnsBackend] = useState(dnsBackendOptions[0].value);
-    const [dnsforwarder, setDnsForwarder] = useState();
-    const [password1, setPassword1] = useState();
-    const [password2, setPassword2] = useState();
+    const [dnsforwarder, setDnsForwarder] = useState('');
+    const [password1, setPassword1] = useState('');
+    const [password2, setPassword2] = useState('');
     const [loading, setLoading] = useState(false);
     const [isValidated, setIsValidated] = useState('error');
     const [helperText, setHelperText] = useState("Enter a Password");

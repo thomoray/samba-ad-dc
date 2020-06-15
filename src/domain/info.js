@@ -14,7 +14,7 @@ import {
 
 export default function DomainInfo() {
     const [info, setInfo] = useState();
-    const [ipAddress, setIPAdress] = useState();
+    const [ipAddress, setIPAdress] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
     const [alertVisible, setAlertVisible] = useState(false);

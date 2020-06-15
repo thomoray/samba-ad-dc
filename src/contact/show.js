@@ -18,7 +18,7 @@ import {
 import './index.css';
 
 export default function ShowContact() {
-    const [contactName, setContactName] = useState();
+    const [contactName, setContactName] = useState("");
     const [contactInfo, setContactInfo] = useState();
     const [error, setError] = useState();
     const [alertVisible, setAlertVisible] = useState();
