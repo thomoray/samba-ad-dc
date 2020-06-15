@@ -16,6 +16,8 @@ export default function GetServerRole() {
                 .then((data) => {
                     if (data.includes("active directory domain controller")) {
                         setAdDcStatus(true);
+                    } else {
+                        setAdDcStatus(false);
                     }
                 })
                 .catch((exception) => {
