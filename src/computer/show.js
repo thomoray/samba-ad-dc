@@ -18,8 +18,8 @@ import {
 import './css/computer.css';
 
 export default function Show() {
-    const [computerName, setComputerName] = useState();
-    const [computerAdObject, setComputerAdObject] = useState();
+    const [computerName, setComputerName] = useState('');
+    const [computerAdObject, setComputerAdObject] = useState([]);
     const [error, setError] = useState();
     const [alertVisible, setAlertVisible] = useState();
     const [loading, setLoading] = useState();
@@ -28,7 +28,7 @@ export default function Show() {
         setAlertVisible(false);
     };
 
-    const objectList = () => computerAdObject.map((obj) => <div key={obj.toString()}>{obj}</div>);
+    const objectList = computerAdObject.map((obj) => <div key={obj.toString()}>{obj}</div>);
 
     const handleComputerNameChange = (e) => {
         setComputerName(e);

@@ -4,20 +4,19 @@ import { Loading, RenderError } from '../common';
 import {
     Card,
     CardBody,
-    CardFooter,
     CardHeader,
     InputGroup,
     Button,
     ButtonVariant,
-    SearchIcon,
     TextInput
 } from '@patternfly/react-core';
 import './css/computer.css';
+import { SearchIcon } from '@patternfly/react-icons';
 
 function ComputerList() {
-    const [list, setList] = useState();
+    const [computerList, setComputerList] = useState([]);
     const [error, setError] = useState();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [alertVisible, setAlertVisible] = useState(false);
     const [searchValue, setSearchValue] = useState("");
 
@@ -27,19 +26,20 @@ function ComputerList() {
         setAlertVisible(false);
     };
 
-    const filteredList = list.filter((computer) => computer.includes(searchValue)).map(filteredComputer =>
+    const filteredList = computerList.filter((computer) => computer.includes(searchValue)).map(filteredComputer =>
         <li key={filteredComputer.toString()}>
             {filteredComputer}
         </li>
     );
 
     useEffect(() => {
+        setLoading(true);
         const command = `samba-tool computer list`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     const splitData = data.split('\n');
                     const sortedData = splitData.sort();
-                    setList(sortedData);
+                    setComputerList(sortedData);
                     setLoading(false);
                 })
                 .catch((exception) => {
@@ -74,11 +74,9 @@ function ComputerList() {
                     <CardHeader>Computer List</CardHeader>
                     <CardBody>
                         <Loading loading={loading} />
+                        <RenderError hideAlert={hideAlert} error={error} alertVisible={alertVisible} />
                         {filteredList}
                     </CardBody>
-                    <CardFooter>
-                        <RenderError hideAlert={hideAlert} error={error} alertVisible={alertVisible} />
-                    </CardFooter>
                 </Card>
             </div>
         </>

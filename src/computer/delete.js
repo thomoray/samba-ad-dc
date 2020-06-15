@@ -15,7 +15,7 @@ import cockpit from 'cockpit';
 import './css/computer.css';
 
 export default function Delete() {
-    const [computerName, setComputerName] = useState();
+    const [computerName, setComputerName] = useState("");
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
     const [errorAlertVisible, setErrorAlertVisible] = useState(false);
