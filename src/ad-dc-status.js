@@ -7,12 +7,9 @@ import Dashboard from './dashboard';
 export default function GetServerRole() {
     const [addcStatus, setAdDcStatus] = useState();
 
-    const command = 'samba-tool testparm --parameter-name=serverrole';
-
-    const process = () => cockpit.script(command, { superuser: true, err: "message" });
-
     useEffect(() => {
-        process()
+        const command = 'samba-tool testparm --parameter-name=serverrole';
+        cockpit.script(command, { superuser: true, err: "message" })
                 .then((data) => {
                     if (data.includes("active directory domain controller")) {
                         setAdDcStatus(true);
