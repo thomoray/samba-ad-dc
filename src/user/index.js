@@ -1,17 +1,55 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Card, CardBody } from '@patternfly/react-core';
+import { Button, Toolbar, ToolbarItem, ToolbarGroup, ToolbarContent } from '@patternfly/react-core';
 import Create from './create';
 import List from './list';
+import { AngleLeftIcon } from '@patternfly/react-icons';
+import './index.css';
+import Enable from './enable';
+import Disable from './disable';
+import Delete from './delete';
+import Move from './move';
+import Show from './show';
+import Password from './password';
 
 function User() {
     return (
         <>
-            <Card>
-                <CardBody>
-                    <Create />
-                </CardBody>
-            </Card>
+            <div className="back-button">
+                <Button onClick={() => history.back()}>
+                    <AngleLeftIcon />
+                    Back
+                </Button>
+            </div>
+            <Toolbar>
+                <ToolbarContent>
+                    <ToolbarGroup>
+                        <ToolbarItem>
+                            <Create />
+                        </ToolbarItem>
+                        <ToolbarItem>
+                            <Delete />
+                        </ToolbarItem>
+                        <ToolbarItem>
+                            <Enable />
+                        </ToolbarItem>
+                        <ToolbarItem>
+                            <Disable />
+                        </ToolbarItem>
+                        <ToolbarItem>
+                            <Move />
+                        </ToolbarItem>
+                        <ToolbarItem>
+                            <Show />
+                        </ToolbarItem>
+                    </ToolbarGroup>
+                </ToolbarContent>
+                <ToolbarContent>
+                    <ToolbarItem>
+                        <Password />
+                    </ToolbarItem>
+                </ToolbarContent>
+            </Toolbar>
             <List />
         </>
     );

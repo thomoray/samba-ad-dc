@@ -13,8 +13,9 @@ import {
 import cockpit from 'cockpit';
 import { Loading } from '../common';
 
-export default function Delete() {
+export default function Show() {
     const [userName, setUserName] = useState('');
+    const [orgUnitContainer, setOrgUnitContainer] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState();
@@ -26,9 +27,11 @@ export default function Delete() {
 
     const handleUsernameInputChange = (value) => setUserName(value);
 
+    const handleOrgUnitContainerChange = (value) => setOrgUnitContainer(value);
+
     const handleSubmit = () => {
         setLoading(true);
-        const command = `samba-tool user delete ${userName}`;
+        const command = `samba-tool user move ${userName} ${orgUnitContainer}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     console.log(data);
@@ -83,16 +86,16 @@ export default function Delete() {
                 </Alert>
             </AlertGroup>}
             <Button variant="primary" onClick={handleModalToggle}>
-                Delete User
+                Move User
             </Button>
             <Modal
                 title="Delete A User"
                 isOpen={isModalOpen}
                 onClose={handleModalToggle}
-                description="A dialog for deleting a user"
+                description="A dialog for moving a user to an organizational unit/container"
                 actions={[
                     <Button key="confirm" variant="primary" onClick={handleSubmit}>
-                        Delete
+                        Move
                     </Button>,
                     <Button key="cancel" variant="link" onClick={handleModalToggle}>
                         Cancel
@@ -106,6 +109,7 @@ export default function Delete() {
                     <FormGroup
                         label="Username"
                         fieldId="horizontal-form-username"
+                        isRequired
                     >
                         <TextInput
                             value={userName}
@@ -115,6 +119,21 @@ export default function Delete() {
                             name="horizontal-form-username"
                             onChange={handleUsernameInputChange}
                             placeholder="User1"
+                        />
+                    </FormGroup>
+                    <FormGroup
+                        label="Organization Unit/Container"
+                        fieldId="horizontal-form-orgUnitContainer"
+                        isRequired
+                    >
+                        <TextInput
+                            value={orgUnitContainer}
+                            type="text"
+                            id="horizontal-form-orgUnitContainer"
+                            aria-describedby="horizontal-form-orgUnitContainer-helper"
+                            name="horizontal-form-orgUnitContainer"
+                            onChange={handleOrgUnitContainerChange}
+                            placeholder="CN=Users"
                         />
                     </FormGroup>
                 </Form>

@@ -13,11 +13,11 @@ import {
 import cockpit from 'cockpit';
 import { Loading } from '../common';
 
-export default function Delete() {
+export default function Show() {
     const [userName, setUserName] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [successMessage, setSuccessMessage] = useState();
+    const [successMessage, setSuccessMessage] = useState([]);
     const [errorMessage, setErrorMessage] = useState();
     const [errorAlertVisible, setErrorAlertVisible] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState();
@@ -28,11 +28,12 @@ export default function Delete() {
 
     const handleSubmit = () => {
         setLoading(true);
-        const command = `samba-tool user delete ${userName}`;
+        const command = `samba-tool user show ${userName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     console.log(data);
-                    setSuccessMessage(data);
+                    const splitData = data.split('\n');
+                    setSuccessMessage(splitData);
                     setSuccessAlertVisible(true);
                     setLoading(false);
                     setIsModalOpen(false);
@@ -79,20 +80,21 @@ export default function Delete() {
                     />
                 }
                 >
-                    <p>{successMessage}</p>
+                    {successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}
                 </Alert>
             </AlertGroup>}
             <Button variant="primary" onClick={handleModalToggle}>
-                Delete User
+                Show User Attributes
             </Button>
             <Modal
-                title="Delete A User"
+                title="Show A User's Attributes"
                 isOpen={isModalOpen}
                 onClose={handleModalToggle}
-                description="A dialog for deleting a user"
+                description="A dialog for displaying a users attributes in the domain against a local
+                LDAP server."
                 actions={[
                     <Button key="confirm" variant="primary" onClick={handleSubmit}>
-                        Delete
+                        Show
                     </Button>,
                     <Button key="cancel" variant="link" onClick={handleModalToggle}>
                         Cancel
@@ -106,6 +108,7 @@ export default function Delete() {
                     <FormGroup
                         label="Username"
                         fieldId="horizontal-form-username"
+                        isRequired
                     >
                         <TextInput
                             value={userName}

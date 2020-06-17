@@ -4,13 +4,15 @@ import {
     FormGroup,
     TextInput,
     Modal,
-    Button
+    Button,
+    Alert,
+    AlertGroup,
+    AlertActionCloseButton,
+    AlertVariant,
 } from '@patternfly/react-core';
 import cockpit from 'cockpit';
 import {
-    Loading,
-    RenderError,
-    Success
+    Loading
 } from '../common';
 
 export default function Create(props) {
@@ -47,13 +49,13 @@ export default function Create(props) {
     const [successMessage, setSuccessMessage] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState(false);
 
-    const hideErrorAlert = () => {
-        setErrorAlertVisible(false);
-    };
+    // const hideErrorAlert = () => {
+    //     setErrorAlertVisible(false);
+    // };
 
-    const hideSuccessAlert = () => {
-        setSuccessAlertVisible(false);
-    };
+    // const hideSuccessAlert = () => {
+    //     setSuccessAlertVisible(false);
+    // };
 
     const handleUsernameInputChange = (value) => {
         setUsername(value);
@@ -199,24 +201,56 @@ export default function Create(props) {
                     setSuccessMessage(data);
                     setSuccessAlertVisible(true);
                     setLoading(false);
-                    setIsModalOpen(false);
+                    // setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
+                    console.log(exception.message);
                     setErrorMessage(exception.message);
                     setErrorAlertVisible(true);
                     setLoading(false);
-                    setIsModalOpen(false);
+                    // setIsModalOpen(false);
                 });
         script();
     };
     return (
         <>
+            {errorAlertVisible &&
+            <AlertGroup isToast>
+                <Alert
+                    isLiveRegion
+                    variant={AlertVariant.danger}
+                    title="An Error Occurred"
+                    actionClose={
+                        <AlertActionCloseButton
+                            title="Close Error Alert Toast"
+                            variantLabel="Danger Alert"
+                            onClose={() => setErrorAlertVisible(false)}
+                        />
+                    }
+                >
+                    <p>{errorMessage}</p>
+                </Alert>
+            </AlertGroup>}
+            {successAlertVisible &&
+            <AlertGroup isToast>
+                <Alert
+                isLiveRegion
+                variant={AlertVariant.success}
+                title="Success"
+                actionClose={
+                    <AlertActionCloseButton
+                        title="Close Success Alert Toast"
+                        variantLabel="Success Alert"
+                        onClose={() => setSuccessAlertVisible(false)}
+                    />
+                }
+                >
+                    <p>{successMessage}</p>
+                </Alert>
+            </AlertGroup>}
             <Button variant="primary" onClick={handleModalToggle}>
                 Create User
             </Button>
-            <RenderError error={errorMessage} hideAlert={hideErrorAlert} isAlertVisible={errorAlertVisible} />,
-            <Success message={successMessage} hideAlert={hideSuccessAlert} isAlertVisible={successAlertVisible} />
             <Modal
                 title="Create A New User"
                 isOpen={isModalOpen}
@@ -224,12 +258,12 @@ export default function Create(props) {
                 description="A dialog for creating new users"
                 actions={[
                     <Button key="confirm" variant="primary" onClick={handleSubmit}>
-                        <Loading loading={loading} />
                         Create
                     </Button>,
                     <Button key="cancel" variant="link" onClick={handleModalToggle}>
                         Cancel
-                    </Button>
+                    </Button>,
+                    <Loading key="loading" loading={loading} />
                 ]}
                 isFooterLeftAligned
                 appendTo={document.body}

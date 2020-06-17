@@ -13,8 +13,9 @@ import {
 import cockpit from 'cockpit';
 import { Loading } from '../common';
 
-export default function Delete() {
-    const [userName, setUserName] = useState('');
+export default function Password() {
+    const [password, setPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState();
@@ -24,11 +25,13 @@ export default function Delete() {
 
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
-    const handleUsernameInputChange = (value) => setUserName(value);
+    const handlePasswordInputChange = (value) => setPassword(value);
+
+    const handleNewPasswordInputChange = (value) => setNewPassword(value);
 
     const handleSubmit = () => {
         setLoading(true);
-        const command = `samba-tool user delete ${userName}`;
+        const command = `samba-tool user password --password=${password} --newpassword=${newPassword}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     console.log(data);
@@ -83,16 +86,16 @@ export default function Delete() {
                 </Alert>
             </AlertGroup>}
             <Button variant="primary" onClick={handleModalToggle}>
-                Delete User
+                Change Password
             </Button>
             <Modal
-                title="Delete A User"
+                title="Change User's Password"
                 isOpen={isModalOpen}
                 onClose={handleModalToggle}
-                description="A dialog for deleting a user"
+                description="A dialog for changing password for a user account (the one provided in authentication)."
                 actions={[
                     <Button key="confirm" variant="primary" onClick={handleSubmit}>
-                        Delete
+                        Change Password
                     </Button>,
                     <Button key="cancel" variant="link" onClick={handleModalToggle}>
                         Cancel
@@ -104,17 +107,33 @@ export default function Delete() {
             >
                 <Form isHorizontal onSubmit={handleSubmit}>
                     <FormGroup
-                        label="Username"
-                        fieldId="horizontal-form-username"
+                        label="Password"
+                        fieldId="horizontal-form-password"
+                        isRequired
                     >
                         <TextInput
-                            value={userName}
-                            type="text"
-                            id="horizontal-form-username"
-                            aria-describedby="horizontal-form-username-helper"
-                            name="horizontal-form-username"
-                            onChange={handleUsernameInputChange}
-                            placeholder="User1"
+                            value={password}
+                            type="password"
+                            id="horizontal-form-password"
+                            aria-describedby="horizontal-form-password-helper"
+                            name="horizontal-form-password"
+                            onChange={handlePasswordInputChange}
+                            placeholder="PassW0rd!"
+                        />
+                    </FormGroup>
+                    <FormGroup
+                        label="New Password"
+                        fieldId="horizontal-form-newPassword"
+                        isRequired
+                    >
+                        <TextInput
+                            value={newPassword}
+                            type="password"
+                            id="horizontal-form-newPassword"
+                            aria-describedby="horizontal-form-newPassword-helper"
+                            name="horizontal-form-newPassword"
+                            onChange={handleNewPasswordInputChange}
+                            placeholder="passM0rd!"
                         />
                     </FormGroup>
                 </Form>
