@@ -38,24 +38,16 @@ export default function Create(props) {
     const [nisDomain, setNisDomain] = useState("");
     const [unixHome, setUnixHome] = useState("");
     const [uid, setUid] = useState("");
-    const [uidNumber, setUidNumber] = useState(0);
-    const [gidNumber, setGidNumber] = useState(0);
-    const [gecos, setGecos] = useState();
-    const [loginShell, setLoginShell] = useState();
+    const [uidNumber, setUidNumber] = useState("");
+    const [gidNumber, setGidNumber] = useState("");
+    const [gecos, setGecos] = useState("");
+    const [loginShell, setLoginShell] = useState("");
 
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
     const [errorAlertVisible, setErrorAlertVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState(false);
-
-    // const hideErrorAlert = () => {
-    //     setErrorAlertVisible(false);
-    // };
-
-    // const hideSuccessAlert = () => {
-    //     setSuccessAlertVisible(false);
-    // };
 
     const handleUsernameInputChange = (value) => {
         setUsername(value);
@@ -165,52 +157,92 @@ export default function Create(props) {
 
     const handleSubmit = () => {
         setLoading(true);
-        console.log('Submitting...');
-        const command = `
-            samba-tool user create \
-                    ${username} \
-                    ${password} \
-                    --must-change-at-next-login \
-                    --userou=${userou} \
-                    --surname=${surname} \
-                    --given-name=${givenName} \
-                    --initials=${initials} \
-                    --profile-path=${profilePath} \
-                    --script-path=${scriptPath} \
-                    --home-drive=${homeDrive} \
-                    --home-directory=${homeDirectory} \
-                    --job-title=${jobTitle} \
-                    --department=${department} \
-                    --company=${company} \
-                    --description=${description} \
-                    --mail-address=${mailAddress} \
-                    --internet-address=${internetAddress} \
-                    --telephone-number=${telephoneNumber} \
-                    --physical-delivery-office=${physicalDeliveryOffice} \
-                    --nis-domain=${nisDomain} \
-                    --unix-home=${unixHome} \
-                    --uid=${uid} \
-                    --uid-number=${uidNumber} \
-                    --gid-number=${gidNumber} \
-                    --gecos=${gecos} \
-                    --login-shell=${loginShell} \
-            `;
-        const script = () => cockpit.script(command, { superuser: true, err: "message" })
-                .done((data) => {
+        const cmd = ["samba-tool", "user", "create", `${username}`, `${password}`];
+        if (userou.length > 0) {
+            cmd.push(`--userou=${userou}`);
+        }
+        if (surname.length > 0) {
+            cmd.push(`--surname=${surname}`);
+        }
+        if (givenName.length > 0) {
+            cmd.push(`--given-name=${givenName}`);
+        }
+        if (initials.length > 0) {
+            cmd.push(`--initials=${initials}`);
+        }
+        if (profilePath.length > 0) {
+            cmd.push(`--profile-path=${profilePath}`);
+        }
+        if (scriptPath.length > 0) {
+            cmd.push(`--script-path=${scriptPath}`);
+        }
+        if (homeDrive.length > 0) {
+            cmd.push(`--home-drive=${homeDrive}`);
+        }
+        if (homeDirectory.length > 0) {
+            cmd.push(`--home-directory=${homeDirectory}`);
+        }
+        if (jobTitle.length > 0) {
+            cmd.push(`--job-title=${jobTitle}`);
+        }
+        if (department.length > 0) {
+            cmd.push(`--department=${department}`);
+        }
+        if (company.length > 0) {
+            cmd.push(`--company=${company}`);
+        }
+        if (description.length > 0) {
+            cmd.push(`--description=${description}`);
+        }
+        if (mailAddress.length > 0) {
+            cmd.push(`--mail-address=${mailAddress}`);
+        }
+        if (internetAddress.length > 0) {
+            cmd.push(`--internet-address=${internetAddress}`);
+        }
+        if (telephoneNumber.length > 0) {
+            cmd.push(`--telephone-number=${telephoneNumber}`);
+        }
+        if (physicalDeliveryOffice.length > 0) {
+            cmd.push(`--physical-delivery-office=${physicalDeliveryOffice}`);
+        }
+        if (nisDomain.length > 0) {
+            cmd.push(`--nis-domain=${nisDomain}`);
+        }
+        if (unixHome.length > 0) {
+            cmd.push(`--unix-home=${unixHome}`);
+        }
+        if (uid.length > 0) {
+            cmd.push(`--uid=${uid}`);
+        }
+        if (uidNumber.length > 0) {
+            cmd.push(`--uid-number=${uidNumber}`);
+        }
+        if (gidNumber.length > 0) {
+            cmd.push(`--gid-number=${gidNumber}`);
+        }
+        if (gecos.length > 0) {
+            cmd.push(`--gecos=${gecos}`);
+        }
+        if (loginShell.length > 0) {
+            cmd.push(`--login-shell=${loginShell}`);
+        }
+        const process = () => cockpit.spawn(cmd, { superuser: true, err: "message" })
+                .then((data) => {
                     console.log(data);
                     setSuccessMessage(data);
                     setSuccessAlertVisible(true);
                     setLoading(false);
-                    // setIsModalOpen(false);
+                    setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception.message);
+                    console.log(exception);
                     setErrorMessage(exception.message);
                     setErrorAlertVisible(true);
                     setLoading(false);
-                    // setIsModalOpen(false);
+                    setIsModalOpen(false);
                 });
-        script();
+        process();
     };
     return (
         <>
@@ -272,6 +304,7 @@ export default function Create(props) {
                     <FormGroup
                         label="Username"
                         fieldId="horizontal-form-username"
+                        isRequired
                     >
                         <TextInput
                             value={username}
@@ -290,7 +323,7 @@ export default function Create(props) {
                     >
                         <TextInput
                             value={password}
-                            type="text"
+                            type="password"
                             id="horizontal-form-password"
                             aria-describedby="horizontal-form-password-helper"
                             name="horizontal-form-password"
