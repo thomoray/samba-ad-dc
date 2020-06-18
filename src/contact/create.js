@@ -4,15 +4,15 @@ import {
     Form,
     FormGroup,
     TextInput,
-    ActionGroup,
     Button,
-    Card,
-    CardBody,
-    CardHeader,
-    CardFooter
+    Modal
 } from '@patternfly/react-core';
-import { Loading, RenderError, Success } from '../common';
 import './index.css';
+import {
+    Loading,
+    SuccessToast,
+    ErrorToast
+} from '../common';
 
 export default function CreateContact() {
     const [givenName, setGivenName] = useState("");
@@ -20,9 +20,10 @@ export default function CreateContact() {
     const [surname, setSurname] = useState("");
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
-    const [errorAlertVisible, setErrorMessageVisible] = useState(false);
+    const [errorAlertVisible, setErrorAlertVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState();
-    const [successAlertVisible, setSuccessMessageVisible] = useState();
+    const [successAlertVisible, setSuccessAlertVisible] = useState();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleGivenNameChange = (e) => {
         setGivenName(e);
@@ -36,14 +37,6 @@ export default function CreateContact() {
         setSurname(e);
     };
 
-    const hideSuccessAlert = () => {
-        setSuccessMessageVisible(false);
-    };
-
-    const hideErrorAlert = () => {
-        setErrorMessageVisible(false);
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
@@ -51,27 +44,50 @@ export default function CreateContact() {
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     setSuccessMessage(data);
-                    setSuccessMessageVisible(true);
+                    setSuccessAlertVisible(true);
                     setLoading(false);
                 })
                 .catch((exception) => {
                     setErrorMessage(exception.message);
-                    setErrorMessageVisible(true);
+                    setErrorAlertVisible(true);
                     setLoading(false);
                 });
         script();
     };
 
+    const handleModalToggle = () => setIsModalOpen(!isModalOpen);
+
     return (
         <>
-            <h3 className="heading-text">Create New Contact</h3>
-            <Form isHorizontal onSubmit={handleSubmit}>
-                <FormGroup
+            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
+            {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
+            <Button variant="primary" onClick={handleModalToggle}>
+                Create Contact
+            </Button>
+            <Modal
+                title="Create A New Contact"
+                isOpen={isModalOpen}
+                onClose={handleModalToggle}
+                description="A dialog for creating new contacts"
+                actions={[
+                    <Button key="confirm" variant="primary" onClick={handleSubmit}>
+                        Create
+                    </Button>,
+                    <Button key="cancel" variant="link" onClick={handleModalToggle}>
+                        Cancel
+                    </Button>,
+                    <Loading key="loading" loading={loading} />
+                ]}
+                isFooterLeftAligned
+                appendTo={document.body}
+            >
+                <Form isHorizontal>
+                    <FormGroup
                         label="Given Name"
                         isRequired
                         fieldId="horizontal-form-given-name"
-                >
-                    <TextInput
+                    >
+                        <TextInput
                             value={givenName}
                             type="text"
                             id="horizontal-form-given-name"
@@ -79,14 +95,14 @@ export default function CreateContact() {
                             name="horizontal-form-given-name"
                             onChange={handleGivenNameChange}
                             placeholder="James"
-                    />
-                </FormGroup>
-                <FormGroup
+                        />
+                    </FormGroup>
+                    <FormGroup
                         label="Initials"
                         isRequired
                         fieldId="horizontal-form-initials"
-                >
-                    <TextInput
+                    >
+                        <TextInput
                             value={initials}
                             type="text"
                             id="horizontal-form-initials"
@@ -94,14 +110,14 @@ export default function CreateContact() {
                             name="horizontal-form-initials"
                             onChange={handleInitialsChange}
                             placeholder="T"
-                    />
-                </FormGroup>
-                <FormGroup
+                        />
+                    </FormGroup>
+                    <FormGroup
                         label="Surname"
                         isRequired
                         fieldId="horizontal-form-surname"
-                >
-                    <TextInput
+                    >
+                        <TextInput
                             value={surname}
                             type="text"
                             id="horizontal-form-surname"
@@ -109,30 +125,10 @@ export default function CreateContact() {
                             name="horizontal-form-surname"
                             onChange={handleSurnameChange}
                             placeholder="Kirk"
-                    />
-                </FormGroup>
-                <ActionGroup>
-                    <Button variant="primary" type="submit">Create Contact</Button>
-                </ActionGroup>
-            </Form>
-            <Card isHoverable>
-                <CardHeader>Create Contact Response</CardHeader>
-                <CardBody>
-                    <Loading loading={loading} />
-                    <Success
-                    message={successMessage}
-                    hideAlert={hideSuccessAlert}
-                    alertVisible={successAlertVisible}
-                    />
-                </CardBody>
-                <CardFooter>
-                    <RenderError
-                    hideAlert={hideErrorAlert}
-                    error={errorMessage}
-                    alertVisible={errorAlertVisible}
-                    />
-                </CardFooter>
-            </Card>
+                        />
+                    </FormGroup>
+                </Form>
+            </Modal>
         </>
     );
 }

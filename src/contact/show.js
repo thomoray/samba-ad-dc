@@ -5,61 +5,79 @@ import {
     FormGroup,
     TextInput,
     Button,
-    Card,
-    CardBody,
-    CardHeader,
-    CardFooter,
-    ActionGroup
+    Modal
 } from '@patternfly/react-core';
 import {
-    RenderError,
     Loading,
+    SuccessToast,
+    ErrorToast
 } from '../common';
 import './index.css';
 
 export default function ShowContact() {
     const [contactName, setContactName] = useState("");
-    const [contactInfo, setContactInfo] = useState();
-    const [error, setError] = useState();
-    const [alertVisible, setAlertVisible] = useState();
+    const [errorMessage, setErrorMessage] = useState(false);
+    const [errorAlertVisible, setErrorAlertVisible] = useState(false);
+    const [successAlertVisible, setSuccessAlertVisible] = useState(false);
+    const [successMessage, setSuccessMessage] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState();
-
-    const hideAlert = () => {
-        setAlertVisible(false);
-    };
 
     const handleContactNameChange = (e) => {
         setContactName(e);
     };
 
-    const showContact = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
         const command = `samba-tool contact show ${contactName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
-                    setContactInfo(data);
+                    setSuccessMessage(data);
+                    setSuccessAlertVisible(true);
                     setLoading(false);
+                    setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    if (exception != null) {
-                        setError(exception.message);
-                        setAlertVisible(true);
-                        setLoading(false);
-                    }
+                    setErrorMessage(exception.message);
+                    setErrorAlertVisible(true);
+                    setLoading(false);
+                    setIsModalOpen(false);
                 });
         return script();
     };
+    const handleModalToggle = () => setIsModalOpen(!isModalOpen);
     return (
         <>
-            <h3 className="heading-text">Display a Contact</h3>
-            <Form isHorizontal onSubmit={showContact}>
-                <FormGroup
+            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
+            {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
+            <Button variant="secondary" onClick={handleModalToggle}>
+                Show Contact
+            </Button>
+            <Modal
+                title="Show A Contact"
+                isOpen={isModalOpen}
+                onClose={handleModalToggle}
+                description="A dialog for showing contacts"
+                actions={[
+                    <Button key="confirm" variant="primary" onClick={handleSubmit}>
+                        Show
+                    </Button>,
+                    <Button key="cancel" variant="link" onClick={handleModalToggle}>
+                        Cancel
+                    </Button>,
+                    <Loading key="loading" loading={loading} />
+                ]}
+                isFooterLeftAligned
+                appendTo={document.body}
+            >
+                <Form isHorizontal>
+                    <FormGroup
                         label="Contact Name"
                         isRequired
                         fieldId="horizontal-form-contact-name"
-                >
-                    <TextInput
+                    >
+                        <TextInput
                             value={contactName}
                             type="text"
                             id="horizontal-form-contact-name"
@@ -67,22 +85,10 @@ export default function ShowContact() {
                             name="horizontal-form-contact-name"
                             onChange={handleContactNameChange}
                             placeholder="James T. Kirk"
-                    />
-                </FormGroup>
-                <ActionGroup>
-                    <Button variant="primary" type="submit">Get Contact Info</Button>
-                </ActionGroup>
-            </Form>
-            <Card isHoverable>
-                <CardHeader>Show Contact Response</CardHeader>
-                <CardBody>
-                    <Loading loading={loading} />
-                    <div>{contactInfo}</div>
-                </CardBody>
-                <CardFooter>
-                    <RenderError hideAlert={hideAlert} error={error} alertVisible={alertVisible} />
-                </CardFooter>
-            </Card>
+                        />
+                    </FormGroup>
+                </Form>
+            </Modal>
         </>
     );
 }

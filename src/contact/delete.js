@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Loading, RenderError, Success } from '../common';
+import {
+    Loading,
+    SuccessToast,
+    ErrorToast
+} from '../common';
 import {
     Form,
     FormGroup,
     TextInput,
-    ActionGroup,
     Button,
-    Card,
-    CardBody,
-    CardHeader,
-    CardFooter
+    Modal
 } from '@patternfly/react-core';
 import cockpit from 'cockpit';
 import './index.css';
@@ -21,13 +21,8 @@ export default function DeleteContact() {
     const [errorAlertVisible, setErrorAlertVisible] = useState(false);
     const [successAlertVisible, setSuccessAlertVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const hideSuccessAlert = () => {
-        setSuccessAlertVisible(false);
-    };
-    const hideErrorAlert = () => {
-        setErrorAlertVisible(false);
-    };
     const handleContactNameChange = (e) => {
         setContactName(e);
     };
@@ -40,6 +35,7 @@ export default function DeleteContact() {
                     setSuccessMessage(data);
                     setSuccessAlertVisible(true);
                     setLoading(false);
+                    setIsModalOpen(false);
                 })
                 .catch((exception) => {
                     setErrorMessage(exception.message);
@@ -48,16 +44,38 @@ export default function DeleteContact() {
                 });
         script();
     };
+    const handleModalToggle = () => setIsModalOpen(!isModalOpen);
     return (
         <>
-            <h3 className="heading-text">Delete a Contact</h3>
-            <Form isHorizontal onSubmit={handleSubmit}>
-                <FormGroup
+            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
+            {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
+            <Button variant="danger" onClick={handleModalToggle}>
+                Delete Contact
+            </Button>
+            <Modal
+                title="Delete A Contact"
+                isOpen={isModalOpen}
+                onClose={handleModalToggle}
+                description="A dialog for deleting contacts"
+                actions={[
+                    <Button key="confirm" variant="danger" onClick={handleSubmit}>
+                        Delete
+                    </Button>,
+                    <Button key="cancel" variant="link" onClick={handleModalToggle}>
+                        Cancel
+                    </Button>,
+                    <Loading key="loading" loading={loading} />
+                ]}
+                isFooterLeftAligned
+                appendTo={document.body}
+            >
+                <Form isHorizontal>
+                    <FormGroup
                         label="Contact Name"
                         isRequired
                         fieldId="horizontal-form-contact-name"
-                >
-                    <TextInput
+                    >
+                        <TextInput
                             value={contactName}
                             type="text"
                             id="horizontal-form-contact-name"
@@ -65,30 +83,10 @@ export default function DeleteContact() {
                             name="horizontal-form-contact-name"
                             onChange={handleContactNameChange}
                             placeholder="Contact1"
-                    />
-                </FormGroup>
-                <ActionGroup>
-                    <Button variant="primary" type="submit">Delete Contact</Button>
-                </ActionGroup>
-            </Form>
-            <Card isHoverable>
-                <CardHeader>Delete Contact Response</CardHeader>
-                <CardBody>
-                    <Loading loading={loading} />
-                    <Success
-                    message={successMessage}
-                    hideAlert={hideSuccessAlert}
-                    alertVisible={successAlertVisible}
-                    />
-                </CardBody>
-                <CardFooter>
-                    <RenderError
-                    hideAlert={hideErrorAlert}
-                    error={errorMessage}
-                    alertVisible={errorAlertVisible}
-                    />
-                </CardFooter>
-            </Card>
+                        />
+                    </FormGroup>
+                </Form>
+            </Modal>
         </>
     );
 }
