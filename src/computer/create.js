@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Loading, RenderError, Success } from '../common';
+import { Loading } from '../common';
 import {
     Form,
     FormGroup,
     TextInput,
-    ActionGroup,
+    Modal,
     Button,
-    Card,
-    CardBody,
-    CardHeader,
-    CardFooter
+    Alert,
+    AlertGroup,
+    AlertActionCloseButton,
+    AlertVariant,
 } from '@patternfly/react-core';
 import cockpit from 'cockpit';
 import './css/computer.css';
@@ -22,12 +22,8 @@ export default function Create() {
     const [successAlertVisible, setSuccessAlertVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
 
-    const hideSuccessAlert = () => {
-        setSuccessAlertVisible(false);
-    };
-    const hideErrorAlert = () => {
-        setErrorAlertVisible(false);
-    };
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const handleComputerNameChange = (e) => {
         setComputerName(e);
     };
@@ -40,24 +36,81 @@ export default function Create() {
                     setSuccessMessage(data);
                     setSuccessAlertVisible(true);
                     setLoading(false);
+                    setIsModalOpen(false);
                 })
                 .catch((exception) => {
                     setErrorMessage(exception.message);
                     setErrorAlertVisible(true);
                     setLoading(false);
+                    setIsModalOpen(false);
                 });
         script();
     };
+    const handleModalToggle = () => setIsModalOpen(!isModalOpen);
+
     return (
         <>
-            <h3 className="create-computer-heading">New Computer</h3>
-            <Form isHorizontal onSubmit={handleSubmit}>
-                <FormGroup
+            {errorAlertVisible &&
+            <AlertGroup isToast>
+                <Alert
+                    isLiveRegion
+                    variant={AlertVariant.danger}
+                    title="An Error Occurred"
+                    actionClose={
+                        <AlertActionCloseButton
+                            title="Close Error Alert Toast"
+                            variantLabel="Danger Alert"
+                            onClose={() => setErrorAlertVisible(false)}
+                        />
+                    }
+                >
+                    <p>{errorMessage}</p>
+                </Alert>
+            </AlertGroup>}
+            {successAlertVisible &&
+            <AlertGroup isToast>
+                <Alert
+                isLiveRegion
+                variant={AlertVariant.success}
+                title="Success"
+                actionClose={
+                    <AlertActionCloseButton
+                        title="Close Success Alert Toast"
+                        variantLabel="Success Alert"
+                        onClose={() => setSuccessAlertVisible(false)}
+                    />
+                }
+                >
+                    <p>{successMessage}</p>
+                </Alert>
+            </AlertGroup>}
+            <Button variant="primary" onClick={handleModalToggle}>
+                Create Computer
+            </Button>
+            <Modal
+                title="Create A New Computer"
+                isOpen={isModalOpen}
+                onClose={handleModalToggle}
+                description="A dialog for creating new computers"
+                actions={[
+                    <Button key="confirm" variant="primary" onClick={handleSubmit}>
+                        Create
+                    </Button>,
+                    <Button key="cancel" variant="link" onClick={handleModalToggle}>
+                        Cancel
+                    </Button>,
+                    <Loading key="loading" loading={loading} />
+                ]}
+                isFooterLeftAligned
+                appendTo={document.body}
+            >
+                <Form isHorizontal>
+                    <FormGroup
                         label="Computer Name"
                         isRequired
                         fieldId="horizontal-form-computer-name"
-                >
-                    <TextInput
+                    >
+                        <TextInput
                             value={computerName}
                             type="text"
                             id="horizontal-form-computer-name"
@@ -65,30 +118,10 @@ export default function Create() {
                             name="horizontal-form-computer-name"
                             onChange={handleComputerNameChange}
                             placeholder="Computer1"
-                    />
-                </FormGroup>
-                <ActionGroup>
-                    <Button variant="primary" type="submit">Create Computer</Button>
-                </ActionGroup>
-            </Form>
-            <Card isHoverable>
-                <CardHeader>Create Computer Response</CardHeader>
-                <CardBody>
-                    <Loading loading={loading} />
-                    <Success
-                    message={successMessage}
-                    hideAlert={hideSuccessAlert}
-                    alertVisible={successAlertVisible}
-                    />
-                </CardBody>
-                <CardFooter>
-                    <RenderError
-                    hideAlert={hideErrorAlert}
-                    error={errorMessage}
-                    alertVisible={errorAlertVisible}
-                    />
-                </CardFooter>
-            </Card>
+                        />
+                    </FormGroup>
+                </Form>
+            </Modal>
         </>
     );
 }

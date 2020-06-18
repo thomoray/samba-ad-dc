@@ -53,7 +53,6 @@ function ComputerList() {
     return (
         <>
             <div>
-                <h3 className="list-computer-heading">Computers in AD DC</h3>
                 <InputGroup>
                     <TextInput
                     name="computerSearchInput"

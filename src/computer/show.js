@@ -4,66 +4,118 @@ import {
     Form,
     FormGroup,
     TextInput,
+    Modal,
     Button,
-    Card,
-    CardBody,
-    CardHeader,
-    CardFooter,
-    ActionGroup
+    Alert,
+    AlertGroup,
+    AlertActionCloseButton,
+    AlertVariant,
 } from '@patternfly/react-core';
 import {
-    RenderError,
     Loading,
 } from '../common';
 import './css/computer.css';
 
 export default function Show() {
     const [computerName, setComputerName] = useState('');
-    const [computerAdObject, setComputerAdObject] = useState([]);
-    const [error, setError] = useState();
-    const [alertVisible, setAlertVisible] = useState();
-    const [loading, setLoading] = useState();
-
-    const hideAlert = () => {
-        setAlertVisible(false);
-    };
-
-    const objectList = computerAdObject.map((obj) => <div key={obj.toString()}>{obj}</div>);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [successMessage, setSuccessMessage] = useState([]);
+    const [errorMessage, setErrorMessage] = useState();
+    const [errorAlertVisible, setErrorAlertVisible] = useState();
+    const [successAlertVisible, setSuccessAlertVisible] = useState();
 
     const handleComputerNameChange = (e) => {
         setComputerName(e);
     };
+    const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
-    const showObject = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
         const command = `samba-tool computer show ${computerName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
-                    const splitRes = data.split('\n');
-                    setComputerAdObject(splitRes);
+                    const splitData = data.split('\n');
+                    setSuccessMessage(splitData);
+                    setSuccessAlertVisible(true);
                     setLoading(false);
+                    setIsModalOpen(false);
                 })
                 .catch((exception) => {
                     console.log(exception);
                     if (exception != null) {
-                        setError(exception.message);
-                        setAlertVisible(true);
+                        setErrorMessage(exception.message);
+                        setErrorAlertVisible(true);
                         setLoading(false);
+                        setIsModalOpen(false);
                     }
                 });
         return script();
     };
     return (
         <>
-            <h3 className="show-computer-heading">Display a Computer AD Object</h3>
-            <Form isHorizontal onSubmit={showObject}>
-                <FormGroup
+            {errorAlertVisible &&
+            <AlertGroup isToast>
+                <Alert
+                    isLiveRegion
+                    variant={AlertVariant.danger}
+                    title="An Error Occurred"
+                    actionClose={
+                        <AlertActionCloseButton
+                            title="Close Error Alert Toast"
+                            variantLabel="Danger Alert"
+                            onClose={() => setErrorAlertVisible(false)}
+                        />
+                    }
+                >
+                    <p>{errorMessage}</p>
+                </Alert>
+            </AlertGroup>}
+            {successAlertVisible &&
+            <AlertGroup isToast>
+                <Alert
+                isLiveRegion
+                variant={AlertVariant.success}
+                title="Success"
+                actionClose={
+                    <AlertActionCloseButton
+                        title="Close Success Alert Toast"
+                        variantLabel="Success Alert"
+                        onClose={() => setSuccessAlertVisible(false)}
+                    />
+                }
+                >
+                    <p>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</p>
+                </Alert>
+            </AlertGroup>}
+            <Button variant="secondary" onClick={handleModalToggle}>
+                Show AD Object
+            </Button>
+            <Modal
+                title="Show A Computer's AD Object"
+                isOpen={isModalOpen}
+                onClose={handleModalToggle}
+                description="A dialog for showing a Computer AD Object"
+                actions={[
+                    <Button key="confirm" variant="primary" onClick={handleSubmit}>
+                        Show
+                    </Button>,
+                    <Button key="cancel" variant="link" onClick={handleModalToggle}>
+                        Cancel
+                    </Button>,
+                    <Loading key="loading" loading={loading} />
+                ]}
+                isFooterLeftAligned
+                appendTo={document.body}
+            >
+                <Form isHorizontal>
+                    <FormGroup
                         label="Computer Name"
                         isRequired
                         fieldId="horizontal-form-computer-name"
-                >
-                    <TextInput
+                    >
+                        <TextInput
                             value={computerName}
                             type="text"
                             id="horizontal-form-computer-name"
@@ -71,22 +123,10 @@ export default function Show() {
                             name="horizontal-form-computer-name"
                             onChange={handleComputerNameChange}
                             placeholder="dc1"
-                    />
-                </FormGroup>
-                <ActionGroup>
-                    <Button variant="primary" type="submit">Get AD Object</Button>
-                </ActionGroup>
-            </Form>
-            <Card isHoverable>
-                <CardHeader>Computer's AD Object Response</CardHeader>
-                <CardBody>
-                    <Loading loading={loading} />
-                    {objectList}
-                </CardBody>
-                <CardFooter>
-                    <RenderError hideAlert={hideAlert} error={error} alertVisible={alertVisible} />
-                </CardFooter>
-            </Card>
+                        />
+                    </FormGroup>
+                </Form>
+            </Modal>
         </>
     );
 }
