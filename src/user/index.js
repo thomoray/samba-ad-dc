@@ -12,6 +12,7 @@ import Move from './move';
 import Show from './show';
 import Password from './password';
 import SetExpiry from './setexpiry';
+import SetPassword from './setpassword';
 
 function User() {
     return (
@@ -51,6 +52,9 @@ function User() {
                     </ToolbarItem>
                     <ToolbarItem>
                         <SetExpiry />
+                    </ToolbarItem>
+                    <ToolbarItem>
+                        <SetPassword />
                     </ToolbarItem>
                 </ToolbarContent>
             </Toolbar>
