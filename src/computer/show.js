@@ -5,14 +5,12 @@ import {
     FormGroup,
     TextInput,
     Modal,
-    Button,
-    Alert,
-    AlertGroup,
-    AlertActionCloseButton,
-    AlertVariant,
+    Button
 } from '@patternfly/react-core';
 import {
     Loading,
+    SuccessToast,
+    ErrorToast
 } from '../common';
 import './css/computer.css';
 
@@ -55,40 +53,8 @@ export default function Show() {
     };
     return (
         <>
-            {errorAlertVisible &&
-            <AlertGroup isToast>
-                <Alert
-                    isLiveRegion
-                    variant={AlertVariant.danger}
-                    title="An Error Occurred"
-                    actionClose={
-                        <AlertActionCloseButton
-                            title="Close Error Alert Toast"
-                            variantLabel="Danger Alert"
-                            onClose={() => setErrorAlertVisible(false)}
-                        />
-                    }
-                >
-                    <p>{errorMessage}</p>
-                </Alert>
-            </AlertGroup>}
-            {successAlertVisible &&
-            <AlertGroup isToast>
-                <Alert
-                isLiveRegion
-                variant={AlertVariant.success}
-                title="Success"
-                actionClose={
-                    <AlertActionCloseButton
-                        title="Close Success Alert Toast"
-                        variantLabel="Success Alert"
-                        onClose={() => setSuccessAlertVisible(false)}
-                    />
-                }
-                >
-                    <p>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</p>
-                </Alert>
-            </AlertGroup>}
+            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
+            {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
             <Button variant="secondary" onClick={handleModalToggle}>
                 Show AD Object
             </Button>

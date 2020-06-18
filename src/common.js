@@ -3,7 +3,9 @@ import {
     Alert,
     AlertActionCloseButton,
     Spinner,
-    Button
+    Button,
+    AlertGroup,
+    AlertVariant
 } from '@patternfly/react-core';
 import { AngleLeftIcon } from '@patternfly/react-icons';
 import './css/common.css';
@@ -59,5 +61,47 @@ export const BackButton = () => {
                 Back
             </Button>
         </div>
+    );
+};
+
+export const ErrorToast = ({ errorMessage, closeModal }) => {
+    return (
+        <AlertGroup isToast>
+            <Alert
+            isLiveRegion
+            variant={AlertVariant.danger}
+            title="An Error Occurred"
+            actionClose={
+                <AlertActionCloseButton
+                    title="Close Error Alert Toast"
+                    variantLabel="Danger Alert"
+                    onClose={closeModal}
+                />
+            }
+            >
+                <p>{errorMessage}</p>
+            </Alert>
+        </AlertGroup>
+    );
+};
+
+export const SuccessToast = ({ successMessage, closeModal }) => {
+    return (
+        <AlertGroup isToast>
+            <Alert
+        isLiveRegion
+        variant={AlertVariant.success}
+        title="Success"
+        actionClose={
+            <AlertActionCloseButton
+                title="Close Success Alert Toast"
+                variantLabel="Success Alert"
+                onClose={closeModal}
+            />
+        }
+            >
+                <p>{successMessage}</p>
+            </Alert>
+        </AlertGroup>
     );
 };

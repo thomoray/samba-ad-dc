@@ -4,14 +4,14 @@ import {
     FormGroup,
     TextInput,
     Modal,
-    Button,
-    Alert,
-    AlertGroup,
-    AlertActionCloseButton,
-    AlertVariant,
+    Button
 } from '@patternfly/react-core';
 import cockpit from 'cockpit';
-import { Loading } from '../common';
+import {
+    Loading,
+    SuccessToast,
+    ErrorToast
+} from '../common';
 
 export default function Show() {
     const [userName, setUserName] = useState('');
@@ -51,40 +51,8 @@ export default function Show() {
     };
     return (
         <>
-            {errorAlertVisible &&
-            <AlertGroup isToast>
-                <Alert
-                    isLiveRegion
-                    variant={AlertVariant.danger}
-                    title="An Error Occurred"
-                    actionClose={
-                        <AlertActionCloseButton
-                            title="Close Error Alert Toast"
-                            variantLabel="Danger Alert"
-                            onClose={() => setErrorAlertVisible(false)}
-                        />
-                    }
-                >
-                    <p>{errorMessage}</p>
-                </Alert>
-            </AlertGroup>}
-            {successAlertVisible &&
-            <AlertGroup isToast>
-                <Alert
-                isLiveRegion
-                variant={AlertVariant.success}
-                title="Success"
-                actionClose={
-                    <AlertActionCloseButton
-                        title="Close Success Alert Toast"
-                        variantLabel="Success Alert"
-                        onClose={() => setSuccessAlertVisible(false)}
-                    />
-                }
-                >
-                    <p>{successMessage}</p>
-                </Alert>
-            </AlertGroup>}
+            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
+            {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
             <Button variant="primary" onClick={handleModalToggle}>
                 Move User
             </Button>
