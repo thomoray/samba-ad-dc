@@ -22,7 +22,7 @@ export default function SetExpiry() {
     const [errorMessage, setErrorMessage] = useState();
     const [errorAlertVisible, setErrorAlertVisible] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState();
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(true);
     const [days, setDays] = useState("");
 
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
@@ -166,13 +166,15 @@ export default function SetExpiry() {
                             placeholder="10"
                         />
                     </FormGroup>
-                    <Switch
-                        id="expiry-switch"
-                        label="No Expiry"
-                        labelOff={`User is set to expire in ${days} days`}
-                        isChecked={isChecked}
-                        onChange={handleSwitchChange}
-                    />
+                    <FormGroup>
+                        <Switch
+                            id="expiry-switch"
+                            label="No Expiry"
+                            labelOff={`User is set to expire in ${days} days`}
+                            isChecked={isChecked}
+                            onChange={handleSwitchChange}
+                        />
+                    </FormGroup>
                 </Form>
             </Modal>
         </>
