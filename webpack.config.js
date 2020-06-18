@@ -105,7 +105,7 @@ Object.keys(info.entries).forEach(function(key) {
 var files = [];
 info.files.forEach(function(value) {
     if (!section || value.indexOf(section) === 0)
-        files.push({ from: vpath("src", value), to: value });
+        files.push({ from: vpath(value), to: value });
 });
 info.files = files;
 
