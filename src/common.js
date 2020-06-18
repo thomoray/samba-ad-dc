@@ -12,7 +12,7 @@ export const RenderError = (props) => {
             <Alert
             variant="danger"
             title="An Error Occurred"
-            action={<AlertActionCloseButton onClose={hideAlert} />}
+            actionClose={<AlertActionCloseButton onClose={hideAlert} />}
             >
                 {props.error}
             </Alert>
@@ -28,7 +28,7 @@ export const Success = (props) => {
             <Alert
             variant="success"
             title="Success"
-            action={<AlertActionCloseButton onClose={hideAlert} />}
+            actionClose={<AlertActionCloseButton onClose={hideAlert} />}
             >
                 {props.message}
             </Alert>
