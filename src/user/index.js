@@ -11,6 +11,7 @@ import Delete from './delete';
 import Move from './move';
 import Show from './show';
 import Password from './password';
+import SetExpiry from './setexpiry';
 
 function User() {
     return (
@@ -47,6 +48,9 @@ function User() {
                 <ToolbarContent>
                     <ToolbarItem>
                         <Password />
+                    </ToolbarItem>
+                    <ToolbarItem>
+                        <SetExpiry />
                     </ToolbarItem>
                 </ToolbarContent>
             </Toolbar>
