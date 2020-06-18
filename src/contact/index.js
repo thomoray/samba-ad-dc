@@ -5,18 +5,12 @@ import List from './list';
 import Show from './show';
 import Delete from './delete';
 import './index.css';
-import { AngleLeftIcon } from '@patternfly/react-icons';
-import { Button } from '@patternfly/react-core';
+import { BackButton } from '../common';
 
 export default function Contact() {
     return (
         <div>
-            <div className="back-button">
-                <Button onClick={() => history.back()}>
-                    <AngleLeftIcon />
-                    Back
-                </Button>
-            </div>
+            <BackButton />
             <h1 className="heading-text">Contact Management</h1>
             <div className="components-margin">
                 <List />

@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Toolbar, ToolbarItem, ToolbarGroup, ToolbarContent } from '@patternfly/react-core';
+import { Toolbar, ToolbarItem, ToolbarGroup, ToolbarContent } from '@patternfly/react-core';
 import Create from './create';
 import List from './list';
-import { AngleLeftIcon } from '@patternfly/react-icons';
 import './index.css';
 import Enable from './enable';
 import Disable from './disable';
@@ -13,16 +12,12 @@ import Show from './show';
 import Password from './password';
 import SetExpiry from './setexpiry';
 import SetPassword from './setpassword';
+import { BackButton } from '../common';
 
 function User() {
     return (
         <>
-            <div className="back-button">
-                <Button onClick={() => history.back()}>
-                    <AngleLeftIcon />
-                    Back
-                </Button>
-            </div>
+            <BackButton />
             <Toolbar>
                 <ToolbarContent>
                     <ToolbarGroup>

@@ -2,8 +2,11 @@ import React from 'react';
 import {
     Alert,
     AlertActionCloseButton,
-    Spinner
+    Spinner,
+    Button
 } from '@patternfly/react-core';
+import { AngleLeftIcon } from '@patternfly/react-icons';
+import './css/common.css';
 
 export const RenderError = (props) => {
     const hideAlert = props.hideAlert;
@@ -46,4 +49,15 @@ export const Loading = (props) => {
         );
     }
     return <div />;
+};
+
+export const BackButton = () => {
+    return (
+        <div className="back-button">
+            <Button variant="tertiary" onClick={() => history.back()}>
+                <AngleLeftIcon />
+                Back
+            </Button>
+        </div>
+    );
 };

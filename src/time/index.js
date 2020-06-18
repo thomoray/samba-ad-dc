@@ -14,9 +14,9 @@ import {
 import './css/time.css';
 import {
     RenderError,
-    Loading
+    Loading,
+    BackButton
 } from '../common';
-import { AngleLeftIcon } from '@patternfly/react-icons';
 
 export default function ServerTime() {
     const [serverTime, setServerTime] = useState();
@@ -54,12 +54,7 @@ export default function ServerTime() {
 
     return (
         <>
-            <div className="back-button">
-                <Button onClick={() => history.back()}>
-                    <AngleLeftIcon />
-                    Back
-                </Button>
-            </div>
+            <BackButton />
             <div>
                 <Form isHorizontal onSubmit={getServerTime}>
                     <FormGroup
