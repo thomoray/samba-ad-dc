@@ -6,25 +6,29 @@ import Show from './show';
 import Delete from './delete';
 import './index.css';
 import { BackButton } from '../common';
+import { Toolbar, ToolbarItem, ToolbarGroup, ToolbarContent } from '@patternfly/react-core';
 
 export default function Contact() {
     return (
-        <div>
+        <>
             <BackButton />
-            <h1 className="heading-text">Contact Management</h1>
-            <div className="components-margin">
-                <List />
-            </div>
-            <div className="components-margin">
-                <Create />
-            </div>
-            <div className="components-margin">
-                <Show />
-            </div>
-            <div className="components-margin">
-                <Delete />
-            </div>
-        </div>
+            <Toolbar>
+                <ToolbarContent>
+                    <ToolbarGroup>
+                        <ToolbarItem>
+                            <Create />
+                        </ToolbarItem>
+                        <ToolbarItem>
+                            <Delete />
+                        </ToolbarItem>
+                        <ToolbarItem>
+                            <Show />
+                        </ToolbarItem>
+                    </ToolbarGroup>
+                </ToolbarContent>
+            </Toolbar>
+            <List />
+        </>
     );
 }
 
