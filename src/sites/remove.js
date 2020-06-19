@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Loading, RenderError, Success } from '../common';
+import {
+    Loading,
+    SuccessToast,
+    ErrorToast
+} from '../common';
 import {
     Form,
     FormGroup,
     TextInput,
-    ActionGroup,
     Button,
-    Card,
-    CardBody,
-    CardHeader,
-    CardFooter
+    Modal,
 } from '@patternfly/react-core';
 import cockpit from 'cockpit';
 import './index.css';
@@ -21,13 +21,8 @@ export default function DeleteSite() {
     const [errorAlertVisible, setErrorAlertVisible] = useState(false);
     const [successAlertVisible, setSuccessAlertVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const hideSuccessAlert = () => {
-        setSuccessAlertVisible(false);
-    };
-    const hideErrorAlert = () => {
-        setErrorAlertVisible(false);
-    };
     const handleSiteNameChange = (e) => {
         setSiteName(e);
     };
@@ -48,16 +43,38 @@ export default function DeleteSite() {
                 });
         script();
     };
+    const handleModalToggle = () => setIsModalOpen(!isModalOpen);
     return (
         <>
-            <h3 className="sites-heading">Delete a Site</h3>
-            <Form isHorizontal onSubmit={handleSubmit}>
-                <FormGroup
+            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
+            {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
+            <Button variant="danger" onClick={handleModalToggle}>
+                Delete Site
+            </Button>
+            <Modal
+                title="Delete A Site"
+                isOpen={isModalOpen}
+                onClose={handleModalToggle}
+                description="A dialog for deleting a site"
+                actions={[
+                    <Button key="confirm" variant="danger" onClick={handleSubmit}>
+                        Create
+                    </Button>,
+                    <Button key="cancel" variant="link" onClick={handleModalToggle}>
+                        Cancel
+                    </Button>,
+                    <Loading key="loading" loading={loading} />
+                ]}
+                isFooterLeftAligned
+                appendTo={document.body}
+            >
+                <Form isHorizontal>
+                    <FormGroup
                         label="Site Name"
                         isRequired
                         fieldId="horizontal-form-site-name"
-                >
-                    <TextInput
+                    >
+                        <TextInput
                             value={siteName}
                             type="text"
                             id="horizontal-form-site-name"
@@ -65,30 +82,10 @@ export default function DeleteSite() {
                             name="horizontal-form-site-name"
                             onChange={handleSiteNameChange}
                             placeholder="Site1"
-                    />
-                </FormGroup>
-                <ActionGroup>
-                    <Button variant="primary" type="submit">Delete Site</Button>
-                </ActionGroup>
-            </Form>
-            <Card isHoverable>
-                <CardHeader>Delete Site Response</CardHeader>
-                <CardBody>
-                    <Loading loading={loading} />
-                    <Success
-                    message={successMessage}
-                    hideAlert={hideSuccessAlert}
-                    alertVisible={successAlertVisible}
-                    />
-                </CardBody>
-                <CardFooter>
-                    <RenderError
-                    hideAlert={hideErrorAlert}
-                    error={errorMessage}
-                    alertVisible={errorAlertVisible}
-                    />
-                </CardFooter>
-            </Card>
+                        />
+                    </FormGroup>
+                </Form>
+            </Modal>
         </>
     );
 }
