@@ -77,7 +77,7 @@ export default function SetPassword() {
         <>
             {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
             {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
-            <Button variant="primary" onClick={handleModalToggle}>
+            <Button variant="secondary" onClick={handleModalToggle}>
                 Reset Password
             </Button>
             <Modal

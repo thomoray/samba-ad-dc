@@ -48,6 +48,10 @@ var info = {
 
         "user/index": [
             "./user/index.js"
+        ],
+
+        "organization_unit/index": [
+            "./organization_unit/index.js"
         ]
     },
     files: [
@@ -59,6 +63,7 @@ var info = {
         "time/time.html",
         "sites/sites.html",
         "user/user.html",
+        "organization_unit/orgunit.html",
         "manifest.json",
     ],
 };

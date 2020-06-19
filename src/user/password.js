@@ -53,7 +53,7 @@ export default function Password() {
         <>
             {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
             {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
-            <Button variant="primary" onClick={handleModalToggle}>
+            <Button variant="secondary" onClick={handleModalToggle}>
                 Change Password
             </Button>
             <Modal

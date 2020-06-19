@@ -51,7 +51,7 @@ export default function Show() {
         <>
             {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
             {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
-            <Button variant="primary" onClick={handleModalToggle}>
+            <Button variant="secondary" onClick={handleModalToggle}>
                 Show User Attributes
             </Button>
             <Modal

@@ -50,7 +50,7 @@ export default function Delete() {
         <>
             {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
             {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
-            <Button variant="primary" onClick={handleModalToggle}>
+            <Button variant="danger" onClick={handleModalToggle}>
                 Delete User
             </Button>
             <Modal
@@ -59,7 +59,7 @@ export default function Delete() {
                 onClose={handleModalToggle}
                 description="A dialog for deleting a user"
                 actions={[
-                    <Button key="confirm" variant="primary" onClick={handleSubmit}>
+                    <Button key="confirm" variant="danger" onClick={handleSubmit}>
                         Delete
                     </Button>,
                     <Button key="cancel" variant="link" onClick={handleModalToggle}>
