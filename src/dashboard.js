@@ -63,6 +63,13 @@ export default function Dashboard() {
                                 </Card>
                             </a>
                         </GalleryItem>
+                        <GalleryItem>
+                            <a href="forest/forest.html" role="link">
+                                <Card isHoverable>
+                                    <CardBody>Forest Management</CardBody>
+                                </Card>
+                            </a>
+                        </GalleryItem>
                     </Gallery>
                 </PageSection>
             </Page>
