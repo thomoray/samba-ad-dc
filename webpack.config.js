@@ -57,6 +57,10 @@ var info = {
         "forest/index": [
             "./forest/index.js"
         ],
+
+        "group/index": [
+            "./group/index.js"
+        ],
     },
     files: [
         "css",
@@ -69,6 +73,7 @@ var info = {
         "user/user.html",
         "organization_unit/orgunit.html",
         "forest/forest.html",
+        "group/group.html",
         "manifest.json",
     ],
 };

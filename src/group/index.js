@@ -1,0 +1,50 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import List from './listgroups';
+import Show from './show';
+import Create from './create';
+import Delete from './delete';
+import { Toolbar, ToolbarItem, ToolbarGroup, ToolbarContent } from '@patternfly/react-core';
+import { BackButton } from '../common';
+import RemoveMembers from './removemembers';
+import MoveGroup from './move';
+import ListMembers from './listmembers';
+
+export default function Group() {
+    return (
+        <div>
+            <BackButton />
+            <Toolbar>
+                <ToolbarContent>
+                    <ToolbarGroup>
+                        <ToolbarItem>
+                            <Create />
+                        </ToolbarItem>
+                        <ToolbarItem>
+                            <Delete />
+                        </ToolbarItem>
+                        <ToolbarItem>
+                            <Show />
+                        </ToolbarItem>
+                    </ToolbarGroup>
+                    <ToolbarGroup>
+                        <ToolbarItem>
+                            <MoveGroup />
+                        </ToolbarItem>
+                        <ToolbarItem>
+                            <ListMembers />
+                        </ToolbarItem>
+                        <ToolbarItem>
+                            <RemoveMembers />
+                        </ToolbarItem>
+                    </ToolbarGroup>
+                </ToolbarContent>
+            </Toolbar>
+            <List />
+        </div>
+    );
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    ReactDOM.render(<Group />, document.getElementById("group"));
+});

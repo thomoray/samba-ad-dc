@@ -70,6 +70,13 @@ export default function Dashboard() {
                                 </Card>
                             </a>
                         </GalleryItem>
+                        <GalleryItem>
+                            <a href="group/group.html" role="link">
+                                <Card isHoverable>
+                                    <CardBody>Group Management</CardBody>
+                                </Card>
+                            </a>
+                        </GalleryItem>
                     </Gallery>
                 </PageSection>
             </Page>
