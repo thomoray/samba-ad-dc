@@ -61,6 +61,10 @@ var info = {
         "group/index": [
             "./group/index.js"
         ],
+
+        "dns/index": [
+            "./dns/index.js"
+        ]
     },
     files: [
         "css",
@@ -74,6 +78,7 @@ var info = {
         "organization_unit/orgunit.html",
         "forest/forest.html",
         "group/group.html",
+        "dns/dns.html",
         "manifest.json",
     ],
 };

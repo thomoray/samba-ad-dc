@@ -77,6 +77,13 @@ export default function Dashboard() {
                                 </Card>
                             </a>
                         </GalleryItem>
+                        <GalleryItem>
+                            <a href="dns/dns.html" role="link">
+                                <Card isHoverable>
+                                    <CardBody>DNS Management</CardBody>
+                                </Card>
+                            </a>
+                        </GalleryItem>
                     </Gallery>
                 </PageSection>
             </Page>
