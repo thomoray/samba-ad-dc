@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Provision from './provision-modal';
 import { Spinner } from '@patternfly/react-core';
 import Dashboard from './dashboard';
+import './app.scss';
 
 export default function GetServerRole() {
     const [addcStatus, setAdDcStatus] = useState();
@@ -39,8 +40,10 @@ export default function GetServerRole() {
         } else {
             return (
                 <>
-                    <Spinner />
-                    <h1>Loading...</h1>
+                    <div className="main-spinner">
+                        <Spinner />
+                        <h1>Loading...</h1>
+                    </div>
                 </>
             );
         }
