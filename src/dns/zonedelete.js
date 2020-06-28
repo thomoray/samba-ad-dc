@@ -21,6 +21,9 @@ export default function DeleteZone() {
     const [errorAlertVisible, setErrorAlertVisible] = useState(false);
     const [successAlertVisible, setSuccessAlertVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
+    const [password, setPassword] = useState("");
+
+    const handlePasswordChange = (value) => setPassword(value);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleServerChange = (value) => setServer(value);
@@ -29,7 +32,7 @@ export default function DeleteZone() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        const command = `samba-tool dns zonedelete ${server} ${zone}`;
+        const command = `samba-tool dns zonedelete ${server} ${zone} --password=${password}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     setSuccessMessage(data);
@@ -100,6 +103,21 @@ export default function DeleteZone() {
                             name="horizontal-form-zone"
                             onChange={handleZoneChange}
                             placeholder="zone1"
+                        />
+                    </FormGroup>
+                    <FormGroup
+                        label="Password"
+                        isRequired
+                        fieldId="horizontal-form-password"
+                    >
+                        <TextInput
+                            value={password}
+                            type="password"
+                            id="horizontal-form-password"
+                            aria-describedby="horizontal-form-password-helper"
+                            name="horizontal-form-password"
+                            onChange={handlePasswordChange}
+                            placeholder="password"
                         />
                     </FormGroup>
                 </Form>

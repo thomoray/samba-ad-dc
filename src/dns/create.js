@@ -26,6 +26,9 @@ export default function CreatDNS() {
     const [errorAlertVisible, setErrorAlertVisible] = useState(false);
     const [successAlertVisible, setSuccessAlertVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
+    const [password, setPassword] = useState("");
+
+    const handlePasswordChange = (value) => setPassword(value);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -47,7 +50,7 @@ export default function CreatDNS() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        const command = `samba-tool dns add ${server} ${zone} ${name} ${type} ${data}`;
+        const command = `samba-tool dns add ${server} ${zone} ${name} ${type} ${data} --password=${password}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     setSuccessMessage(data);
@@ -165,6 +168,21 @@ export default function CreatDNS() {
                             aria-describedby="horizontal-form-data-helper"
                             name="horizontal-form-data"
                             onChange={handleDataChange}
+                        />
+                    </FormGroup>
+                    <FormGroup
+                        label="Password"
+                        isRequired
+                        fieldId="horizontal-form-password"
+                    >
+                        <TextInput
+                            value={password}
+                            type="password"
+                            id="horizontal-form-password"
+                            aria-describedby="horizontal-form-password-helper"
+                            name="horizontal-form-password"
+                            onChange={handlePasswordChange}
+                            placeholder="password"
                         />
                     </FormGroup>
                 </Form>

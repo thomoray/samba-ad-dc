@@ -20,6 +20,9 @@ export default function ZoneList() {
     const [errorMessage, setErrorMessage] = useState();
     const [errorAlertVisible, setErrorAlertVisible] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState();
+    const [password, setPassword] = useState("");
+
+    const handlePasswordChange = (value) => setPassword(value);
 
     const handleServerChange = (e) => {
         setServer(e);
@@ -28,7 +31,7 @@ export default function ZoneList() {
 
     const handleSubmit = (e) => {
         setLoading(true);
-        const command = `samba-tool dns zonelist ${server}`;
+        const command = `samba-tool dns zonelist ${server} --password=${password}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     const splitData = data.split('\n');
@@ -92,6 +95,21 @@ export default function ZoneList() {
                             name="horizontal-form-server"
                             onChange={handleServerChange}
                             placeholder="dc1"
+                        />
+                    </FormGroup>
+                    <FormGroup
+                        label="Password"
+                        isRequired
+                        fieldId="horizontal-form-password"
+                    >
+                        <TextInput
+                            value={password}
+                            type="password"
+                            id="horizontal-form-password"
+                            aria-describedby="horizontal-form-password-helper"
+                            name="horizontal-form-password"
+                            onChange={handlePasswordChange}
+                            placeholder="password"
                         />
                     </FormGroup>
                 </Form>
