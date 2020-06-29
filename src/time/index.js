@@ -1,3 +1,4 @@
+import "../lib/patternfly-4-cockpit.scss";
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import cockpit from 'cockpit';
@@ -17,6 +18,7 @@ import {
     Loading,
     BackButton
 } from '../common';
+import "../lib/patternfly-4-overrides.scss";
 
 export default function ServerTime() {
     const [serverTime, setServerTime] = useState();

@@ -1,3 +1,4 @@
+import "../lib/patternfly-4-cockpit.scss";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import List from './list';
@@ -8,6 +9,7 @@ import Move from './move';
 import Rename from './rename';
 import { Toolbar, ToolbarItem, ToolbarGroup, ToolbarContent } from '@patternfly/react-core';
 import { BackButton } from '../common';
+import "../lib/patternfly-4-overrides.scss";
 
 export default function OrgUnit() {
     return (

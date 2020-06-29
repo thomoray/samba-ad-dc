@@ -1,3 +1,4 @@
+import "../lib/patternfly-4-cockpit.scss";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Create from './create';
@@ -8,6 +9,7 @@ import SetSite from './set-site';
 import './index.css';
 import { BackButton } from '../common';
 import { Toolbar, ToolbarItem, ToolbarGroup, ToolbarContent } from '@patternfly/react-core';
+import "../lib/patternfly-4-overrides.scss";
 
 export default function Sites() {
     return (

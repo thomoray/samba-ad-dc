@@ -1,3 +1,4 @@
+import "../lib/patternfly-4-cockpit.scss";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import List from './listgroups';
@@ -9,6 +10,7 @@ import { BackButton } from '../common';
 import RemoveMembers from './removemembers';
 import MoveGroup from './move';
 import ListMembers from './listmembers';
+import "../lib/patternfly-4-overrides.scss";
 
 export default function Group() {
     return (

@@ -1,3 +1,4 @@
+import "../lib/patternfly-4-cockpit.scss";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Toolbar, ToolbarItem, ToolbarGroup, ToolbarContent } from '@patternfly/react-core';
@@ -13,6 +14,7 @@ import Password from './password';
 import SetExpiry from './setexpiry';
 import SetPassword from './setpassword';
 import { BackButton } from '../common';
+import "../lib/patternfly-4-overrides.scss";
 
 function User() {
     return (
