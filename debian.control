@@ -1,0 +1,14 @@
+Source: cockpit-samba-ad-dc
+Section: cockpit-samba-ad-dc
+Priority: optional
+Maintainer: Hezekiah Maina <hezekiahmaina3@gmail.com>
+Build-Depends: debhelper (>= 9), cockpit
+
+Package: cockpit-samba-ad-dc
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Cockpit Samba AD DC management plugin.
+ The cockpit samba AD DC management plugin gives administrators
+ a simple and intuitive user interface to perform common operations
+ done using the samba-tool command line utility.
+ 
