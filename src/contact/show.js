@@ -9,7 +9,6 @@ import {
 } from '@patternfly/react-core';
 import {
     Loading,
-    SuccessToast,
     ErrorToast
 } from '../common';
 import './index.css';
@@ -50,7 +49,15 @@ export default function ShowContact() {
     return (
         <>
             {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
-            {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
+            {successAlertVisible &&
+            <Modal
+                title="Contact Object"
+                isOpen={successAlertVisible}
+                onClose={() => successAlertVisible(false)}
+                appendTo={document.body}
+            >
+                <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>
+            </Modal>}
             <Button variant="secondary" onClick={handleModalToggle}>
                 Show Contact
             </Button>
