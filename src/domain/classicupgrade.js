@@ -9,11 +9,13 @@ import {
 } from '@patternfly/react-core';
 import {
     Loading,
-    ErrorToast
+    ErrorToast,
+    SuccessToast
 } from '../common';
 
-export default function DomainInfo() {
-    const [ipAddress, setIpAddress] = useState('');
+export default function ClassicUpgrade() {
+    const [dbdir, setDbdir] = useState('');
+    const [smbconf, setSmbconf] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState([]);
@@ -21,16 +23,14 @@ export default function DomainInfo() {
     const [errorAlertVisible, setErrorAlertVisible] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState();
 
-    const handleIpAddressChange = (e) => {
-        setIpAddress(e);
-    };
-
+    const handleDbdirChange = (e) => setDbdir(e);
+    const handleSmbconfChange = (e) => setSmbconf(e);
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        const command = `samba-tool domain info ${ipAddress}`;
+        const command = `samba-tool domain classicupgrade --dbdir=${dbdir} ${smbconf}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     const splitData = data.split('\n');
@@ -53,26 +53,18 @@ export default function DomainInfo() {
     return (
         <>
             {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
-            {successAlertVisible &&
-            <Modal
-                title="Domain Info"
-                isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
-                appendTo={document.body}
-            >
-                <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>
-            </Modal>}
+            {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
             <Button variant="secondary" onClick={handleModalToggle}>
-                Domain Info
+                Classic Upgrade
             </Button>
             <Modal
-                title="Domain Info"
+                title="Classic Upgrade"
                 isOpen={isModalOpen}
                 onClose={handleModalToggle}
-                description="Basic info about a domain and the DC passed as parameter."
+                description="Upgrade from Samba classic (NT4-like) database to Samba AD DC database."
                 actions={[
                     <Button key="confirm" variant="primary" onClick={handleSubmit}>
-                        Show
+                        Upgrade
                     </Button>,
                     <Button key="cancel" variant="link" onClick={handleModalToggle}>
                         Cancel
@@ -84,18 +76,31 @@ export default function DomainInfo() {
             >
                 <Form isHorizontal>
                     <FormGroup
-                        label="Computer Name"
+                        label="Database Directory"
                         isRequired
-                        fieldId="horizontal-form-ip-address"
+                        fieldId="horizontal-form-db-dir"
                     >
                         <TextInput
-                            value={ipAddress}
+                            value={dbdir}
                             type="text"
-                            id="horizontal-form-ip-address"
-                            aria-describedby="horizontal-form-ip-address-helper"
-                            name="horizontal-form-ip-address"
-                            onChange={handleIpAddressChange}
-                            placeholder="127.0.0.1"
+                            id="horizontal-form-db-dir"
+                            aria-describedby="horizontal-form-db-dir-helper"
+                            name="horizontal-form-db-dir"
+                            onChange={handleDbdirChange}
+                        />
+                    </FormGroup>
+                    <FormGroup
+                        label="Classic smb conf"
+                        isRequired
+                        fieldId="horizontal-form-smb-conf"
+                    >
+                        <TextInput
+                            value={smbconf}
+                            type="text"
+                            id="horizontal-form-smb-conf"
+                            aria-describedby="horizontal-form-smb-conf-helper"
+                            name="horizontal-form-smb-conf"
+                            onChange={handleSmbconfChange}
                         />
                     </FormGroup>
                 </Form>

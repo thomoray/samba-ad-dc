@@ -5,15 +5,19 @@ import {
     FormGroup,
     TextInput,
     Modal,
-    Button
+    Button,
+    FormSelect,
+    FormSelectOption
 } from '@patternfly/react-core';
 import {
     Loading,
-    ErrorToast
+    ErrorToast,
+    SuccessToast
 } from '../common';
 
-export default function DomainInfo() {
-    const [ipAddress, setIpAddress] = useState('');
+export default function DCPromo() {
+    const [dnsDomain, setDnsDomain] = useState('');
+    const [role, setRole] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState([]);
@@ -21,16 +25,20 @@ export default function DomainInfo() {
     const [errorAlertVisible, setErrorAlertVisible] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState();
 
-    const handleIpAddressChange = (e) => {
-        setIpAddress(e);
-    };
+    const handleDnsDomainChange = (e) => setDnsDomain(e);
+    const handleRoleChange = (e) => setRole(e);
+
+    const serverRole = [
+        { value: 'DC', label: 'DC', disabled: false },
+        { value: 'RODC', label: 'RODC', disabled: false },
+    ];
 
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        const command = `samba-tool domain info ${ipAddress}`;
+        const command = `samba-tool domain dcpromo ${dnsDomain} ${role}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     const splitData = data.split('\n');
@@ -53,26 +61,18 @@ export default function DomainInfo() {
     return (
         <>
             {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
-            {successAlertVisible &&
-            <Modal
-                title="Domain Info"
-                isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
-                appendTo={document.body}
-            >
-                <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>
-            </Modal>}
+            {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
             <Button variant="secondary" onClick={handleModalToggle}>
-                Domain Info
+                Promote DC
             </Button>
             <Modal
-                title="Domain Info"
+                title="Promote DC"
                 isOpen={isModalOpen}
                 onClose={handleModalToggle}
-                description="Basic info about a domain and the DC passed as parameter."
+                description="Promote an existing domain member or NT4 PDC to an AD DC."
                 actions={[
                     <Button key="confirm" variant="primary" onClick={handleSubmit}>
-                        Show
+                        Promote
                     </Button>,
                     <Button key="cancel" variant="link" onClick={handleModalToggle}>
                         Cancel
@@ -84,19 +84,31 @@ export default function DomainInfo() {
             >
                 <Form isHorizontal>
                     <FormGroup
-                        label="Computer Name"
+                        label="DNS Domain"
                         isRequired
-                        fieldId="horizontal-form-ip-address"
+                        fieldId="horizontal-form-dns-domain"
                     >
                         <TextInput
-                            value={ipAddress}
+                            value={dnsDomain}
                             type="text"
-                            id="horizontal-form-ip-address"
-                            aria-describedby="horizontal-form-ip-address-helper"
-                            name="horizontal-form-ip-address"
-                            onChange={handleIpAddressChange}
-                            placeholder="127.0.0.1"
+                            id="horizontal-form-dns-domain"
+                            aria-describedby="horizontal-form-dns-domain-helper"
+                            name="horizontal-form-dns-domain"
+                            onChange={handleDnsDomainChange}
                         />
+                    </FormGroup>
+                    <FormGroup label="Role" isRequired fieldId="horizontal-form-role">
+                        <FormSelect
+                            value={role}
+                            onChange={handleRoleChange}
+                            id="horzontal-form-role"
+                            name="horizontal-form-role"
+                            aria-label="Role"
+                        >
+                            {serverRole.map((option, index) => (
+                                <FormSelectOption key={index} value={option.value} label={option.label} />
+                            ))}
+                        </FormSelect>
                     </FormGroup>
                 </Form>
             </Modal>

@@ -9,11 +9,13 @@ import {
 } from '@patternfly/react-core';
 import {
     Loading,
-    ErrorToast
-} from '../common';
+    ErrorToast,
+    SuccessToast
+} from '../../common';
 
-export default function DomainInfo() {
-    const [ipAddress, setIpAddress] = useState('');
+export default function BackupOnline() {
+    const [targetDir, setTargetDir] = useState('');
+    const [server, setServer] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState([]);
@@ -21,16 +23,14 @@ export default function DomainInfo() {
     const [errorAlertVisible, setErrorAlertVisible] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState();
 
-    const handleIpAddressChange = (e) => {
-        setIpAddress(e);
-    };
-
+    const handleTargetDirChange = (e) => setTargetDir(e);
+    const handleServerChange = (e) => setServer(e);
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        const command = `samba-tool domain info ${ipAddress}`;
+        const command = `samba-tool backup online --server=${server} --targetdir=${targetDir}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     const splitData = data.split('\n');
@@ -53,26 +53,18 @@ export default function DomainInfo() {
     return (
         <>
             {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
-            {successAlertVisible &&
-            <Modal
-                title="Domain Info"
-                isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
-                appendTo={document.body}
-            >
-                <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>
-            </Modal>}
+            {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
             <Button variant="secondary" onClick={handleModalToggle}>
-                Domain Info
+                Backup Online
             </Button>
             <Modal
-                title="Domain Info"
+                title="Backup Online"
                 isOpen={isModalOpen}
                 onClose={handleModalToggle}
-                description="Basic info about a domain and the DC passed as parameter."
+                description="Copy a running DC's current DB into a backup tar file."
                 actions={[
                     <Button key="confirm" variant="primary" onClick={handleSubmit}>
-                        Show
+                        Backup
                     </Button>,
                     <Button key="cancel" variant="link" onClick={handleModalToggle}>
                         Cancel
@@ -84,18 +76,33 @@ export default function DomainInfo() {
             >
                 <Form isHorizontal>
                     <FormGroup
-                        label="Computer Name"
+                        label="Server"
+                        isRequired
+                        fieldId="horizontal-form-server"
+                    >
+                        <TextInput
+                            value={server}
+                            type="text"
+                            id="horizontal-form-server"
+                            aria-describedby="horizontal-form-server-helper"
+                            name="horizontal-form-server"
+                            onChange={handleServerChange}
+                            placeholder="127.0.0.1"
+                        />
+                    </FormGroup>
+                    <FormGroup
+                        label="Target Directory"
                         isRequired
                         fieldId="horizontal-form-ip-address"
                     >
                         <TextInput
-                            value={ipAddress}
+                            value={targetDir}
                             type="text"
                             id="horizontal-form-ip-address"
                             aria-describedby="horizontal-form-ip-address-helper"
                             name="horizontal-form-ip-address"
-                            onChange={handleIpAddressChange}
-                            placeholder="127.0.0.1"
+                            onChange={handleTargetDirChange}
+                            placeholder="/path"
                         />
                     </FormGroup>
                 </Form>

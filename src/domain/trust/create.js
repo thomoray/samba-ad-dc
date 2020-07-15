@@ -9,11 +9,12 @@ import {
 } from '@patternfly/react-core';
 import {
     Loading,
+    SuccessToast,
     ErrorToast
-} from '../common';
+} from '../../common';
 
-export default function DomainInfo() {
-    const [ipAddress, setIpAddress] = useState('');
+export default function CreateTrust() {
+    const [domain, setDomain] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState([]);
@@ -21,16 +22,14 @@ export default function DomainInfo() {
     const [errorAlertVisible, setErrorAlertVisible] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState();
 
-    const handleIpAddressChange = (e) => {
-        setIpAddress(e);
-    };
+    const handleDomainChange = (e) => setDomain(e);
 
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        const command = `samba-tool domain info ${ipAddress}`;
+        const command = `samba-tool domain trust create ${domain}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     const splitData = data.split('\n');
@@ -53,26 +52,18 @@ export default function DomainInfo() {
     return (
         <>
             {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
-            {successAlertVisible &&
-            <Modal
-                title="Domain Info"
-                isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
-                appendTo={document.body}
-            >
-                <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>
-            </Modal>}
-            <Button variant="secondary" onClick={handleModalToggle}>
-                Domain Info
+            {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
+            <Button variant="primary" onClick={handleModalToggle}>
+                Create Trust
             </Button>
             <Modal
-                title="Domain Info"
+                title="Create trust"
                 isOpen={isModalOpen}
                 onClose={handleModalToggle}
-                description="Basic info about a domain and the DC passed as parameter."
+                description="Create a domain or forest trust."
                 actions={[
                     <Button key="confirm" variant="primary" onClick={handleSubmit}>
-                        Show
+                        Create
                     </Button>,
                     <Button key="cancel" variant="link" onClick={handleModalToggle}>
                         Cancel
@@ -84,18 +75,18 @@ export default function DomainInfo() {
             >
                 <Form isHorizontal>
                     <FormGroup
-                        label="Computer Name"
+                        label="Domain"
                         isRequired
-                        fieldId="horizontal-form-ip-address"
+                        fieldId="horizontal-form-domain"
                     >
                         <TextInput
-                            value={ipAddress}
+                            value={domain}
                             type="text"
-                            id="horizontal-form-ip-address"
-                            aria-describedby="horizontal-form-ip-address-helper"
-                            name="horizontal-form-ip-address"
-                            onChange={handleIpAddressChange}
-                            placeholder="127.0.0.1"
+                            id="horizontal-form-domain"
+                            aria-describedby="horizontal-form-domain-helper"
+                            name="horizontal-form-domain"
+                            onChange={handleDomainChange}
+                            placeholder="DOMAIN"
                         />
                     </FormGroup>
                 </Form>
