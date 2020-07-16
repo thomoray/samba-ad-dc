@@ -8,7 +8,7 @@ import {
     PageSection,
 } from '@patternfly/react-core';
 
-export default function Dashboard() {
+export default function Main() {
     return (
         <>
             <Page>

@@ -2,7 +2,7 @@ import cockpit from 'cockpit';
 import React, { useState, useEffect } from 'react';
 import Provision from './provision-modal';
 import { Spinner } from '@patternfly/react-core';
-import Dashboard from './dashboard';
+import Main from './main';
 import './app.scss';
 
 export default function GetServerRole() {
@@ -27,7 +27,7 @@ export default function GetServerRole() {
         if (addcStatus) {
             return (
                 <div>
-                    <Dashboard />
+                    <Main />
                 </div>
             );
         } else if (addcStatus === false) {
