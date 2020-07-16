@@ -84,6 +84,13 @@ export default function Dashboard() {
                                 </Card>
                             </a>
                         </GalleryItem>
+                        <GalleryItem>
+                            <a href="delegation/delegation.html" role="link">
+                                <Card isHoverable>
+                                    <CardBody>Delegation Management</CardBody>
+                                </Card>
+                            </a>
+                        </GalleryItem>
                     </Gallery>
                 </PageSection>
             </Page>

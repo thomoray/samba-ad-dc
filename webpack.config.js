@@ -64,6 +64,10 @@ var info = {
 
         "dns/index": [
             "./dns/index.js"
+        ],
+
+        "delegation/index": [
+            "./delegation/index.js"
         ]
     },
     files: [
@@ -79,6 +83,7 @@ var info = {
         "forest/forest.html",
         "group/group.html",
         "dns/dns.html",
+        "delegation/delegation.html",
         "manifest.json",
     ],
 };
