@@ -68,6 +68,10 @@ var info = {
 
         "delegation/index": [
             "./delegation/index.js"
+        ],
+
+        "spn/index": [
+            "./spn/index.js"
         ]
     },
     files: [
@@ -84,6 +88,7 @@ var info = {
         "group/group.html",
         "dns/dns.html",
         "delegation/delegation.html",
+        "spn/spn.html",
         "manifest.json",
     ],
 };

@@ -91,6 +91,13 @@ export default function Main() {
                                 </Card>
                             </a>
                         </GalleryItem>
+                        <GalleryItem>
+                            <a href="spn/spn.html" role="link">
+                                <Card isHoverable>
+                                    <CardBody>SPN Management</CardBody>
+                                </Card>
+                            </a>
+                        </GalleryItem>
                     </Gallery>
                 </PageSection>
             </Page>
