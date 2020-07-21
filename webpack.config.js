@@ -72,6 +72,10 @@ var info = {
 
         "spn/index": [
             "./spn/index.js"
+        ],
+
+        "fsmo/index": [
+            "./fsmo/index.js"
         ]
     },
     files: [
@@ -89,6 +93,7 @@ var info = {
         "dns/dns.html",
         "delegation/delegation.html",
         "spn/spn.html",
+        "fsmo/fsmo.html",
         "manifest.json",
     ],
 };

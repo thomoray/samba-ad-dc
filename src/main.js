@@ -98,6 +98,13 @@ export default function Main() {
                                 </Card>
                             </a>
                         </GalleryItem>
+                        <GalleryItem>
+                            <a href="fsmo/fsmo.html" role="link">
+                                <Card isHoverable>
+                                    <CardBody>FSMO Management</CardBody>
+                                </Card>
+                            </a>
+                        </GalleryItem>
                     </Gallery>
                 </PageSection>
             </Page>
