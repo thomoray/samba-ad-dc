@@ -10,15 +10,15 @@ import {
 } from '../../common';
 
 export default function ListTrusts() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [successMessage, setSuccessMessage] = useState([]);
     const [errorMessage, setErrorMessage] = useState();
     const [errorAlertVisible, setErrorAlertVisible] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState();
+    const [isLoadingModalOpen, setIsLoadingModalOpen] = useState(false);
 
     const listTrusts = (e) => {
-        setIsModalOpen(!isModalOpen);
+        setIsLoadingModalOpen(true);
         setLoading(true);
         const command = `samba-tool domain trust list`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -27,7 +27,7 @@ export default function ListTrusts() {
                     setSuccessMessage(splitData);
                     setSuccessAlertVisible(true);
                     setLoading(false);
-                    setIsModalOpen(false);
+                    setIsLoadingModalOpen(false);
                 })
                 .catch((exception) => {
                     console.log(exception);
@@ -35,7 +35,7 @@ export default function ListTrusts() {
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
                         setLoading(false);
-                        setIsModalOpen(false);
+                        setIsLoadingModalOpen(false);
                     }
                 });
         return script();
@@ -55,6 +55,14 @@ export default function ListTrusts() {
             <Button variant="secondary" onClick={listTrusts}>
                 List Trusts
             </Button>
+            <Modal
+                title="Loading Trusts Lists"
+                isOpen={isLoadingModalOpen}
+                onClose={() => setIsLoadingModalOpen(false)}
+                appendTo={document.body}
+            >
+                <Loading loading={loading} />
+            </Modal>
         </>
     );
 }
