@@ -76,6 +76,10 @@ var info = {
 
         "fsmo/index": [
             "./fsmo/index.js"
+        ],
+
+        "gpo/index": [
+            "./gpo/index.js"
         ]
     },
     files: [
@@ -94,6 +98,7 @@ var info = {
         "delegation/delegation.html",
         "spn/spn.html",
         "fsmo/fsmo.html",
+        "gpo/gpo.html",
         "manifest.json",
     ],
 };

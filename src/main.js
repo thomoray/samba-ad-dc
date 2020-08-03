@@ -105,6 +105,13 @@ export default function Main() {
                                 </Card>
                             </a>
                         </GalleryItem>
+                        <GalleryItem>
+                            <a href="gpo/gpo.html" role="link">
+                                <Card isHoverable>
+                                    <CardBody>GPO Management</CardBody>
+                                </Card>
+                            </a>
+                        </GalleryItem>
                     </Gallery>
                 </PageSection>
             </Page>
