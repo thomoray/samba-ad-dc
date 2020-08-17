@@ -78,7 +78,7 @@ Make sure you have `npm` available (usually from your distribution package).
 These commands check out the source and build it into the `dist/` directory:
 
 ```
-git clone https://gitlab.com/Hezeh/samba-ad-dc.git
+git clone https://gitlab.com/HezekiahM/samba-ad-dc.git
 cd samba-ad-dc
 make
 ```
