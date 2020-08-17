@@ -1,6 +1,76 @@
-# Cockpit Samba AD DC Management Tool
+# Cockpit Samba AD DC Management Plugin
 
-A Samba AD DC Management tool built with Cockpit to run in a browser!
+A Cockpit plugin for Samba AD DC Management. 
+
+# Installing
+
+## Fedora 32 Installation
+1. Download the repository https://download.opensuse.org/repositories/home:/Hezekiah/Fedora_32/home:Hezekiah.repo
+
+2. Place it to /etc/yum.repos.d/
+
+3. Run the following command
+```
+# dnf install cockpit-samba-ad-dc
+```
+
+4. If you already have Cockpit on your server, point your web browser to: https://ip-address-of-machine:9090
+
+5. Use your system user account and password to log in.
+
+## Ubuntu 20.04 Installation
+1. Update the apt package index and install packages to allow apt to use a repository over HTTPS:
+```
+$ sudo apt update
+$ sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+```
+
+2. Add Cockpit-Samba-AD-DC GPG key:
+```
+$ curl -fsSL https://download.opensuse.org/repositories/home:/Hezekiah/xUbuntu_20.04/Release.key | sudo apt-key add -
+```
+
+3.  Add the repository to the sources.list file
+```
+$ sudo add-apt-repository "deb https://download.opensuse.org/repositories/home:/Hezekiah/xUbuntu_20.04 ./"
+```
+
+4. Update the apt package index, and download the latest version of Cockpit-Samba-AD-DC plugin.
+```
+ $ sudo apt-get update
+ $ sudo apt-get install cockpit-samba-ad-dc
+```
+
+5. If you already have Cockpit on your server, point your web browser to: https://ip-address-of-machine:9090
+
+6. Use your system user account and password to log in.
+
+## Debian 10 Installation
+1. Update the apt package index and install packages to allow apt to use a repository over HTTPS:
+```
+$ sudo apt update
+$ sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+```
+
+2. Add Cockpit-Samba-AD-DC GPG key:
+```
+$ curl -fsSL https://download.opensuse.org/repositories/home:/Hezekiah/Debian_10/Release.key | sudo apt-key add -
+```
+
+3.  Add the repository to the sources.list file
+```
+$ sudo add-apt-repository "deb https://download.opensuse.org/repositories/home:/Hezekiah/Debian_10 ./"
+```
+
+4. Update the apt package index, and download the latest version of Cockpit-Samba-AD-DC plugin.
+```
+ $ sudo apt-get update
+ $ sudo apt-get install cockpit-samba-ad-dc
+```
+
+5. If you already have Cockpit on your server, point your web browser to: https://ip-address-of-machine:9090
+
+6. Use your system user account and password to log in.
 
 # Getting and building the source
 
@@ -12,8 +82,6 @@ git clone https://gitlab.com/Hezeh/samba-ad-dc.git
 cd samba-ad-dc
 make
 ```
-
-# Installing
 
 `make install` compiles and installs the package in `/usr/share/cockpit/`. The
 convenience targets `srpm` and `rpm` build the source and binary rpms,
@@ -45,7 +113,7 @@ or
 
 # Running eslint
 
-Cockpit Starter Kit uses [ESLint](https://eslint.org/) to automatically check
+The Project uses [ESLint](https://eslint.org/) to automatically check
 JavaScript code style in `.js` and `.jsx` files.
 
 The linter is executed within every build as a webpack preloader.
@@ -59,53 +127,3 @@ Violations of some rules can be fixed automatically by:
     $ npm run eslint:fix
 
 Rules configuration can be found in the `.eslintrc.json` file.
-
-# Automated Testing
-
-Run `make check` to build an RPM, install it into a standard Cockpit test VM
-(centos-7 by default), and run the test/check-application integration test on
-it. This uses Cockpit's Chrome DevTools Protocol based browser tests, through a
-Python API abstraction. Note that this API is not guaranteed to be stable, so
-if you run into failures and don't want to adjust tests, consider checking out
-Cockpit's test/common from a tag instead of master (see the `test/common`
-target in `Makefile`).
-
-After the test VM is prepared, you can manually run the test without rebuilding
-the VM, possibly with extra options for tracing and halting on test failures
-(for interactive debugging):
-
-    TEST_OS=centos-7 test/check-application -tvs
-
-You can also run the test against a different Cockpit image, for example:
-
-    TEST_OS=fedora-32 make check
-
-<!-- # Customizing
-
-After cloning the Samba AD DC repo you should rename the files, package names, and
-labels to your own project's name. Use these commands to find out what to
-change:
-
-    find -iname '*starter*'
-    git grep -i starter -->
-
-# Automated release
-
-Once your cloned project is ready for a release, you should consider automating
-that.  [Cockpituous release](https://github.com/cockpit-project/cockpituous/tree/master/release)
-aims to fully automate project releases to GitHub, Fedora, Ubuntu, COPR, Docker
-Hub, and other places. The intention is that the only manual step for releasing
-a project is to create a signed tag for the version number; pushing the tag
-then triggers a GitHub webhook that calls a set of release scripts (on
-Cockpit's CI infrastructure).
-
-<!-- starter-kit includes an example [cockpitous release script](./cockpituous-release)
-that builds an upstream release tarball and source RPM. Please see the above
-cockpituous documentation for details. -->
-<!-- 
-# Further reading
-
- * The [Starter Kit announcement](http://cockpit-project.org/blog/cockpit-starter-kit.html)
-   blog post explains the rationale for this project.
- * [Cockpit Deployment and Developer documentation](http://cockpit-project.org/guide/latest/)
- * [Make your project easily discoverable](http://cockpit-project.org/blog/making-a-cockpit-application.html) -->
