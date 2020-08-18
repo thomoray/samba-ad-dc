@@ -5,6 +5,8 @@ A Cockpit plugin for Samba AD DC Management.
 # Installing
 
 ## Fedora 32 Installation
+Requirements:
+Nodejs, nodejs-npm, nodejs-package-config, cockpit
 1. Download the repository https://download.opensuse.org/repositories/home:/Hezekiah/Fedora_32/home:Hezekiah.repo
 
 2. Place it to /etc/yum.repos.d/
@@ -19,6 +21,7 @@ A Cockpit plugin for Samba AD DC Management.
 5. Use your system user account and password to log in.
 
 ## Ubuntu 20.04 Installation
+Requirements: Nodejs(12.x), npm, cockpit
 1. Update the apt package index and install packages to allow apt to use a repository over HTTPS:
 ```
 $ sudo apt update
@@ -46,6 +49,7 @@ $ sudo add-apt-repository "deb https://download.opensuse.org/repositories/home:/
 6. Use your system user account and password to log in.
 
 ## Debian 10 Installation
+Requirements: Nodejs(10.x), npm, cockpit
 1. Update the apt package index and install packages to allow apt to use a repository over HTTPS:
 ```
 $ sudo apt update
