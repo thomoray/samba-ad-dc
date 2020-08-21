@@ -23,11 +23,8 @@ export default function DeleteContact() {
     const [successMessage, setSuccessMessage] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleContactNameChange = (e) => {
-        setContactName(e);
-    };
+    const handleContactNameChange = (e) => setContactName(e);
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool contact delete ${contactName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -56,7 +53,6 @@ export default function DeleteContact() {
                 title="Delete A Contact"
                 isOpen={isModalOpen}
                 onClose={handleModalToggle}
-                description="A dialog for deleting contacts"
                 actions={[
                     <Button key="confirm" variant="danger" onClick={handleSubmit}>
                         Delete
@@ -66,7 +62,6 @@ export default function DeleteContact() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

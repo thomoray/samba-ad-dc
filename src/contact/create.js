@@ -25,31 +25,24 @@ export default function CreateContact() {
     const [successAlertVisible, setSuccessAlertVisible] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleGivenNameChange = (e) => {
-        setGivenName(e);
-    };
-
-    const handleInitialsChange = (e) => {
-        setInitials(e);
-    };
-
-    const handleSurnameChange = (e) => {
-        setSurname(e);
-    };
+    const handleGivenNameChange = (e) => setGivenName(e);
+    const handleInitialsChange = (e) => setInitials(e);
+    const handleSurnameChange = (e) => setSurname(e);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool contact create --given-name=${givenName} --initials=${initials} --surname=${surname}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     setSuccessMessage(data);
                     setSuccessAlertVisible(true);
+                    setIsModalOpen(false);
                     setLoading(false);
                 })
                 .catch((exception) => {
                     setErrorMessage(exception.message);
                     setErrorAlertVisible(true);
+                    setIsModalOpen(false);
                     setLoading(false);
                 });
         script();
@@ -78,7 +71,6 @@ export default function CreateContact() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>
