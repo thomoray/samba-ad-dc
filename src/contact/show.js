@@ -11,7 +11,6 @@ import {
     Loading,
     ErrorToast
 } from '../common';
-import './index.css';
 
 export default function ShowContact() {
     const [contactName, setContactName] = useState("");
@@ -22,12 +21,11 @@ export default function ShowContact() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState();
 
-    const handleContactNameChange = (e) => {
-        setContactName(e);
-    };
+    const handleContactNameChange = (e) => setContactName(e);
+    const handleSuccessModalClose = () => setSuccessAlertVisible(false);
+    const handleErrorAlertClose = () => setErrorAlertVisible(false);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool contact show ${contactName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -48,12 +46,12 @@ export default function ShowContact() {
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
     return (
         <>
-            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
+            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={handleErrorAlertClose} />}
             {successAlertVisible &&
             <Modal
                 title="Contact Object"
                 isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
+                onClose={handleSuccessModalClose}
                 appendTo={document.body}
             >
                 <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>
@@ -65,7 +63,6 @@ export default function ShowContact() {
                 title="Show A Contact"
                 isOpen={isModalOpen}
                 onClose={handleModalToggle}
-                description="A dialog for showing contacts"
                 actions={[
                     <Button key="confirm" variant="primary" onClick={handleSubmit}>
                         Show
@@ -75,7 +72,6 @@ export default function ShowContact() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

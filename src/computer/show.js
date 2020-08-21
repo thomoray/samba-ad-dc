@@ -11,7 +11,6 @@ import {
     Loading,
     ErrorToast
 } from '../common';
-import './css/computer.css';
 
 export default function Show() {
     const [computerName, setComputerName] = useState('');
@@ -22,13 +21,12 @@ export default function Show() {
     const [errorAlertVisible, setErrorAlertVisible] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState();
 
-    const handleComputerNameChange = (e) => {
-        setComputerName(e);
-    };
+    const handleComputerNameChange = (e) => setComputerName(e);
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
+    const handleSuccessModalClose = () => setSuccessAlertVisible(false);
+    const handleErrorAlertClose = () => setErrorAlertVisible(false);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool computer show ${computerName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -52,12 +50,12 @@ export default function Show() {
     };
     return (
         <>
-            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
+            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={handleErrorAlertClose} />}
             {successAlertVisible &&
             <Modal
                 title="Retrieved the Computer AD Object"
                 isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
+                onClose={handleSuccessModalClose}
                 appendTo={document.body}
             >
                 <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>
@@ -69,7 +67,6 @@ export default function Show() {
                 title="Show A Computer's AD Object"
                 isOpen={isModalOpen}
                 onClose={handleModalToggle}
-                description="A dialog for showing a Computer AD Object"
                 actions={[
                     <Button key="confirm" variant="primary" onClick={handleSubmit}>
                         Show
@@ -79,7 +76,6 @@ export default function Show() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

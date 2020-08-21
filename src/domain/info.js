@@ -21,14 +21,12 @@ export default function DomainInfo() {
     const [errorAlertVisible, setErrorAlertVisible] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState();
 
-    const handleIpAddressChange = (e) => {
-        setIpAddress(e);
-    };
-
+    const handleIpAddressChange = (e) => setIpAddress(e);
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
+    const handleSuccessModalClose = () => setSuccessAlertVisible(false);
+    const handleErrorAlertClose = () => setErrorAlertVisible(false);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool domain info ${ipAddress}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -52,12 +50,12 @@ export default function DomainInfo() {
     };
     return (
         <>
-            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
+            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={handleErrorAlertClose} />}
             {successAlertVisible &&
             <Modal
                 title="Domain Info"
                 isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
+                onClose={handleSuccessModalClose}
                 appendTo={document.body}
             >
                 <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>
@@ -79,7 +77,6 @@ export default function DomainInfo() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>
