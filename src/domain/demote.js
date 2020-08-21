@@ -30,7 +30,6 @@ export default function Demote() {
     const handleDeadServerChange = (e) => setDeadServer(e);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const cmd = ["samba-tool", "domain", "demote"];
         if (server.length > 0) {
@@ -82,7 +81,6 @@ export default function Demote() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

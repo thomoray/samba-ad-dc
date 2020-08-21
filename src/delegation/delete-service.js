@@ -27,7 +27,6 @@ export default function DeleteService() {
     const handleAccountNameChange = (e) => setAccountName(e);
     const handlePrincipalChange = (e) => setPrincipal(e);
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool delegation del-service ${accountName} ${principal}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })

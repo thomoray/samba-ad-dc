@@ -23,11 +23,8 @@ export default function RemoveSubnet() {
     const [successMessage, setSuccessMessage] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleSubnetInputChange = (e) => {
-        setSubnet(e);
-    };
+    const handleSubnetInputChange = (e) => setSubnet(e);
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool sites subnet remove ${subnet}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -65,7 +62,6 @@ export default function RemoveSubnet() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

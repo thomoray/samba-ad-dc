@@ -70,7 +70,6 @@ export default function Show() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal onSubmit={handleSubmit}>

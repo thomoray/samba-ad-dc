@@ -30,7 +30,6 @@ export default function CreateZone() {
     const handleZoneChange = (value) => setZone(value);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool dns zonecreate ${server} ${zone} --password=${password}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -71,7 +70,6 @@ export default function CreateZone() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

@@ -13,9 +13,7 @@ export default function Show() {
     const [loading, setLoading] = useState(false);
     const [alertVisible, setAlertVisible] = useState(false);
 
-    const hideAlert = () => {
-        setAlertVisible(false);
-    };
+    const hideAlert = () => setAlertVisible(false);
 
     useEffect(() => {
         setLoading(true);

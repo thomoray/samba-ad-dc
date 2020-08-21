@@ -27,19 +27,16 @@ export default function Delete() {
     const handleNameChange = (e) => setName(e);
     const handleUserChange = (e) => setUser(e);
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool  spn delete ${name} ${user}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
-                    console.log(data);
                     setSuccessMessage(data);
                     setSuccessAlertVisible(true);
                     setLoading(false);
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     setErrorMessage(exception.message);
                     setErrorAlertVisible(true);
                     setLoading(false);

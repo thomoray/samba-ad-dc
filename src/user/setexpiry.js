@@ -47,14 +47,12 @@ export default function SetExpiry() {
             const command = `samba-tool user setexpiry ${userName} ${days}`;
             const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                     .done((data) => {
-                        console.log(data);
                         setSuccessMessage(data);
                         setSuccessAlertVisible(true);
                         setLoading(false);
                         setIsModalOpen(false);
                     })
                     .catch((exception) => {
-                        console.log(exception);
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
                         setLoading(false);
@@ -65,14 +63,12 @@ export default function SetExpiry() {
             const cmd = `samba-tool user setexpiry ${userName} --noexpiry`;
             const script = () => cockpit.script(cmd, { superuser: true, err: 'message' })
                     .done((data) => {
-                        console.log(data);
                         setSuccessMessage(data);
                         setSuccessAlertVisible(true);
                         setLoading(false);
                         setIsModalOpen(false);
                     })
                     .catch((exception) => {
-                        console.log(exception);
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
                         setLoading(false);
@@ -102,7 +98,6 @@ export default function SetExpiry() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal onSubmit={handleSubmit}>

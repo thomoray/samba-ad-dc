@@ -23,8 +23,6 @@ export default function DomainInfo() {
 
     const handleIpAddressChange = (e) => setIpAddress(e);
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
-    const handleSuccessModalClose = () => setSuccessAlertVisible(false);
-    const handleErrorAlertClose = () => setErrorAlertVisible(false);
 
     const handleSubmit = (e) => {
         setLoading(true);
@@ -50,12 +48,12 @@ export default function DomainInfo() {
     };
     return (
         <>
-            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={handleErrorAlertClose} />}
+            {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
             {successAlertVisible &&
             <Modal
                 title="Domain Info"
                 isOpen={successAlertVisible}
-                onClose={handleSuccessModalClose}
+                onClose={() => setSuccessAlertVisible(false)}
                 appendTo={document.body}
             >
                 <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>

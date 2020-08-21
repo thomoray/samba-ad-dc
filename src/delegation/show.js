@@ -24,7 +24,6 @@ export default function Show() {
 
     const handleAccountNameChange = (e) => setaccountName(e);
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool delegation show ${accountName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -51,7 +50,7 @@ export default function Show() {
             <Modal
                 title="Delegation settings"
                 isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
+                onClose={() => setSuccessAlertVisible(false)}
                 appendTo={document.body}
             >
                 <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>

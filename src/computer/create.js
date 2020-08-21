@@ -28,7 +28,6 @@ export default function Create() {
         setComputerName(e);
     };
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool computer create ${computerName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -69,7 +68,6 @@ export default function Create() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

@@ -30,7 +30,6 @@ export default function ListTrusts() {
                     setIsLoadingModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     if (exception != null) {
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
@@ -47,7 +46,7 @@ export default function ListTrusts() {
             <Modal
                 title="Trusts List"
                 isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
+                onClose={() => setSuccessAlertVisible(false)}
                 appendTo={document.body}
             >
                 <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>

@@ -26,7 +26,6 @@ export default function BackupOffline() {
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool domain backup offline --targetdir=${targetDir}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -69,7 +68,6 @@ export default function BackupOffline() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

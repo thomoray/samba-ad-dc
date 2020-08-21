@@ -30,7 +30,6 @@ export default function BackupRestore() {
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool domain backup restore --backup-file=${tarFile} --targetdir=${outputDir} --newservername=${serverName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -42,7 +41,6 @@ export default function BackupRestore() {
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     if (exception != null) {
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
@@ -73,7 +71,6 @@ export default function BackupRestore() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

@@ -25,23 +25,18 @@ export default function DeleteGroup() {
 
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
-    const handlegroupNameChange = (e) => {
-        setGroupName(e);
-    };
+    const handlegroupNameChange = (e) => setGroupName(e);
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool group delete ${groupName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
-                    console.log(data);
                     setSuccessMessage(data);
                     setSuccessAlertVisible(true);
                     setLoading(false);
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     setErrorMessage(exception.message);
                     setErrorAlertVisible(true);
                     setLoading(false);

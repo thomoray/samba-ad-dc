@@ -29,11 +29,9 @@ export default function BackupRename() {
     const handleServerChange = (e) => setServer(e);
     const handleDomainChange = (e) => setNewDomain(e);
     const handleRealmChange = (e) => setNewRealm(e);
-
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool backup rename ${newDomain} ${newRealm} --server=${server} --targetdir=${targetDir}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -45,7 +43,6 @@ export default function BackupRename() {
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     if (exception != null) {
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
@@ -76,7 +73,6 @@ export default function BackupRename() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

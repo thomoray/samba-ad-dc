@@ -20,7 +20,6 @@ export default function DeleteOU() {
     const [successAlertVisible, setSuccessAlertVisible] = useState(false);
     const [successMessage, setSuccessMessage] = useState(false);
     const [oudn, setOudn] = useState("");
-
     const [isModalOpen, setIsModalOpen] = useState();
 
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
@@ -38,7 +37,6 @@ export default function DeleteOU() {
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     setErrorMessage(exception.message);
                     setErrorAlertVisible(true);
                     setLoading(false);
@@ -67,7 +65,6 @@ export default function DeleteOU() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

@@ -27,7 +27,6 @@ export default function Create() {
     const handleNameChange = (e) => setName(e);
     const handleUserChange = (e) => setUser(e);
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool spn add ${name} ${user}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })

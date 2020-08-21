@@ -38,7 +38,6 @@ export default function Show() {
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     if (exception != null) {
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);

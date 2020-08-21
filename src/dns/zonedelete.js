@@ -30,7 +30,6 @@ export default function DeleteZone() {
     const handleZoneChange = (value) => setZone(value);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool dns zonedelete ${server} ${zone} --password=${password}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -71,7 +70,6 @@ export default function DeleteZone() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

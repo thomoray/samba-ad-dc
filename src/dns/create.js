@@ -44,11 +44,8 @@ export default function CreatDNS() {
         { value: 'TXT', label: 'TXT', disabled: false },
     ];
 
-    const handleNameChange = (e) => {
-        setName(e);
-    };
+    const handleNameChange = (e) => setName(e);
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool dns add ${server} ${zone} ${name} ${type} ${data} --password=${password}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -70,9 +67,7 @@ export default function CreatDNS() {
     const handleServerChange = (value) => setServer(value);
     const handleZoneChange = (value) => setZone(value);
     const handleDataChange = (value) => setData(value);
-    const handleTypeChange = (value, data) => {
-        setType(value);
-    };
+    const handleTypeChange = (value) => setType(value);
 
     return (
         <>

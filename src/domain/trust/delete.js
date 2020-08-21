@@ -23,11 +23,9 @@ export default function DeleteTrust() {
     const [successAlertVisible, setSuccessAlertVisible] = useState();
 
     const handleDomainChange = (e) => setDomain(e);
-
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool domain trust delete ${domain}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -39,7 +37,6 @@ export default function DeleteTrust() {
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     if (exception != null) {
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
@@ -70,7 +67,6 @@ export default function DeleteTrust() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

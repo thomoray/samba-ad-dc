@@ -21,13 +21,10 @@ export default function ListMembers() {
     const [errorAlertVisible, setErrorAlertVisible] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState();
 
-    const handlegroupNameChange = (e) => {
-        setgroupName(e);
-    };
+    const handlegroupNameChange = (e) => setgroupName(e);
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool group listmembers ${groupName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -39,7 +36,6 @@ export default function ListMembers() {
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     if (exception != null) {
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
@@ -56,7 +52,7 @@ export default function ListMembers() {
             <Modal
                 title={`A List of all Members in ${groupName}`}
                 isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
+                onClose={() => setSuccessAlertVisible(false)}
                 appendTo={document.body}
             >
                 <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>

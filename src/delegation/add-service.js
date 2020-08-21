@@ -26,7 +26,6 @@ export default function AddService() {
     const handleAccountNameChange = (e) => setAccountName(e);
     const handlePrincipalChange = (e) => setPrincipal(e);
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool delegation add-service ${accountName} ${principal}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })

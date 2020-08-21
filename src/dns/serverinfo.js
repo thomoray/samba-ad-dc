@@ -58,7 +58,7 @@ export default function DNSServerInfo() {
             <Modal
                 title={`${server} server information`}
                 isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
+                onClose={() => setSuccessAlertVisible(false)}
                 appendTo={document.body}
             >
                 <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>

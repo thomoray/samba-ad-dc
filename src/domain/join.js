@@ -55,7 +55,6 @@ export default function JoinDomain() {
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const cmd = ["samba-tool", "domain", "join", `${dnsDomain}`, `${role}`];
         if (parentDomain.length > 0) {
@@ -94,7 +93,6 @@ export default function JoinDomain() {
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     if (exception != null) {
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
@@ -125,7 +123,6 @@ export default function JoinDomain() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

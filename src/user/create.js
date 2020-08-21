@@ -227,14 +227,12 @@ export default function Create(props) {
         }
         const process = () => cockpit.spawn(cmd, { superuser: true, err: "message" })
                 .then((data) => {
-                    console.log(data);
                     setSuccessMessage(data);
                     setSuccessAlertVisible(true);
                     setLoading(false);
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     setErrorMessage(exception.message);
                     setErrorAlertVisible(true);
                     setLoading(false);
@@ -263,7 +261,6 @@ export default function Create(props) {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal onSubmit={handleSubmit}>

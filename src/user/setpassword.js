@@ -57,14 +57,12 @@ export default function SetPassword() {
             const cmd = `samba-tool user ${userName} ${password}`;
             const script = () => cockpit.script(cmd, { superuser: true, err: 'message' })
                     .done((data) => {
-                        console.log(data);
                         setSuccessMessage(data);
                         setSuccessAlertVisible(true);
                         setLoading(false);
                         setIsModalOpen(false);
                     })
                     .catch((exception) => {
-                        console.log(exception);
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
                         setLoading(false);
@@ -94,7 +92,6 @@ export default function SetPassword() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal onSubmit={handleSubmit}>

@@ -28,7 +28,6 @@ export default function BackupOnline() {
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool backup online --server=${server} --targetdir=${targetDir}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -40,7 +39,6 @@ export default function BackupOnline() {
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     if (exception != null) {
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
@@ -71,7 +69,6 @@ export default function BackupOnline() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

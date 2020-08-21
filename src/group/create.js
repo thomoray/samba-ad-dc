@@ -27,7 +27,6 @@ export default function CreateGroup() {
         setGroupName(e);
     };
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool group create ${groupName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })

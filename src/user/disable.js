@@ -23,7 +23,6 @@ export default function Disable() {
     const [successAlertVisible, setSuccessAlertVisible] = useState();
 
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
-
     const handleUsernameInputChange = (value) => setUserName(value);
 
     const handleSubmit = () => {
@@ -31,14 +30,12 @@ export default function Disable() {
         const command = `samba-tool user disable ${userName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
-                    console.log(data);
                     setSuccessMessage(data);
                     setSuccessAlertVisible(true);
                     setLoading(false);
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     setErrorMessage(exception.message);
                     setErrorAlertVisible(true);
                     setLoading(false);
@@ -67,7 +64,6 @@ export default function Disable() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal onSubmit={handleSubmit}>

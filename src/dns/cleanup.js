@@ -27,11 +27,8 @@ export default function CreatDNS() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleNameChange = (e) => {
-        setName(e);
-    };
+    const handleNameChange = (e) => setName(e);
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool dns cleanup ${server} ${name} --password=${password}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })

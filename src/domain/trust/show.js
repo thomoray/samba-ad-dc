@@ -21,14 +21,10 @@ export default function ShowTrust() {
     const [errorAlertVisible, setErrorAlertVisible] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState();
 
-    const handleNameChange = (e) => {
-        setName(e);
-    };
-
+    const handleNameChange = (e) => setName(e);
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool domain trust show ${name}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -40,7 +36,6 @@ export default function ShowTrust() {
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     if (exception != null) {
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
@@ -57,7 +52,7 @@ export default function ShowTrust() {
             <Modal
                 title="Show Trust"
                 isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
+                onClose={() => setSuccessAlertVisible(false)}
                 appendTo={document.body}
             >
                 <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>
@@ -79,7 +74,6 @@ export default function ShowTrust() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

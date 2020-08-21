@@ -36,7 +36,6 @@ export default function DCPromo() {
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool domain dcpromo ${dnsDomain} ${role}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -79,7 +78,6 @@ export default function DCPromo() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

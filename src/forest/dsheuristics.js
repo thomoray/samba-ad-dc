@@ -22,13 +22,10 @@ export default function Show() {
     const [errorAlertVisible, setErrorAlertVisible] = useState();
     const [successAlertVisible, setSuccessAlertVisible] = useState();
 
-    const handleHeuristicsValueChange = (e) => {
-        setHeuristicsValue(e);
-    };
+    const handleHeuristicsValueChange = (e) => setHeuristicsValue(e);
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool forest directory_service dsheuristics ${heuristicsValue}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -40,7 +37,6 @@ export default function Show() {
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     if (exception != null) {
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
@@ -73,7 +69,6 @@ export default function Show() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

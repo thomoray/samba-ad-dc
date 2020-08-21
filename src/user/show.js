@@ -22,7 +22,6 @@ export default function Show() {
     const [successAlertVisible, setSuccessAlertVisible] = useState();
 
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
-
     const handleUsernameInputChange = (value) => setUserName(value);
 
     const handleSubmit = () => {
@@ -30,7 +29,6 @@ export default function Show() {
         const command = `samba-tool user show ${userName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
-                    console.log(data);
                     const splitData = data.split('\n');
                     setSuccessMessage(splitData);
                     setSuccessAlertVisible(true);
@@ -38,7 +36,6 @@ export default function Show() {
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     setErrorMessage(exception.message);
                     setErrorAlertVisible(true);
                     setLoading(false);
@@ -53,7 +50,7 @@ export default function Show() {
             <Modal
                 title="Contact Object"
                 isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
+                onClose={() => setSuccessAlertVisible(false)}
                 appendTo={document.body}
             >
                 <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>
@@ -76,7 +73,6 @@ export default function Show() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal onSubmit={handleSubmit}>

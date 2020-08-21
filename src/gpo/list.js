@@ -53,7 +53,7 @@ export default function ListAccountGPOs() {
             <Modal
                 title={`GPO Account ${account}`}
                 isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
+                onClose={() => setSuccessAlertVisible(false)}
                 appendTo={document.body}
             >
                 <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>

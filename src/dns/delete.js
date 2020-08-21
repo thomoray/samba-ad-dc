@@ -48,7 +48,6 @@ export default function DeleteDNS() {
         setName(e);
     };
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool dns delete ${server} ${zone} ${name} ${type} ${data} --password=${password}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })

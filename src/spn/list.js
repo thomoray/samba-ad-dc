@@ -25,7 +25,6 @@ export default function ListSpns() {
     const handleModalToggle = () => setIsModalOpen(!isModalOpen);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool spn list ${user}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -37,7 +36,6 @@ export default function ListSpns() {
                     setIsModalOpen(false);
                 })
                 .catch((exception) => {
-                    console.log(exception);
                     if (exception != null) {
                         setErrorMessage(exception.message);
                         setErrorAlertVisible(true);
@@ -54,7 +52,7 @@ export default function ListSpns() {
             <Modal
                 title="User's SPNs"
                 isOpen={successAlertVisible}
-                onClose={() => successAlertVisible(false)}
+                onClose={() => setSuccessAlertVisible(false)}
                 appendTo={document.body}
             >
                 <div>{successMessage.map((line) => <h6 key={line.toString()}>{line}</h6>)}</div>

@@ -21,14 +21,12 @@ export default function CreateSubnet() {
     const [successMessage, setSuccessMessage] = useState(false);
     const [subnet, setSubnet] = useState("");
     const [siteOfSubnet, setSiteOfSubnet] = useState("");
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleSubnetInputChange = (value) => setSubnet(value);
     const handleSiteOfSubnetChange = (value) => setSiteOfSubnet(value);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool sites subnet create ${subnet} ${siteOfSubnet}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -69,7 +67,6 @@ export default function CreateSubnet() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

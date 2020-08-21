@@ -28,7 +28,6 @@ export default function SetSite() {
     const handleSiteOfSubnetChange = (value) => setSiteOfSubnet(value);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool sites subnet set-site ${subnet} ${siteOfSubnet}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -69,7 +68,6 @@ export default function SetSite() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

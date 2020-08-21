@@ -25,7 +25,6 @@ export default function CreateSite() {
 
     const handleSiteNameChange = (e) => setSiteName(e);
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool sites create ${siteName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
@@ -63,7 +62,6 @@ export default function CreateSite() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

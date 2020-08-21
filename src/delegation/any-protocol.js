@@ -33,7 +33,6 @@ export default function AnyProtocol() {
     const handleProtocolStateChange = (e) => setProtocolState(e);
     const handleAccountNameChange = (e) => setAccountName(e);
     const handleSubmit = (e) => {
-        e.preventDefault();
         setLoading(true);
         const command = `samba-tool delegation for-any-protocol ${accountName} ${protocolState}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })

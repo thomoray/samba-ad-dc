@@ -21,7 +21,6 @@ export default function CreateOrgUnit() {
     const [successMessage, setSuccessMessage] = useState(false);
     const [oudn, setOudn] = useState("");
     const [description, setDescription] = useState("");
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleOudnInputChange = (value) => setOudn(value);
     const handleDescriptionChange = (value) => setDescription(value);
@@ -85,7 +84,6 @@ export default function CreateOrgUnit() {
                     </Button>,
                     <Loading key="loading" loading={loading} />
                 ]}
-                isFooterLeftAligned
                 appendTo={document.body}
             >
                 <Form isHorizontal>

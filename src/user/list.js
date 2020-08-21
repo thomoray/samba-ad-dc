@@ -28,9 +28,7 @@ export default function List() {
         </li>
     );
 
-    const hideAlert = () => {
-        setAlertVisible(false);
-    };
+    const hideAlert = () => setAlertVisible(false);
 
     useEffect(() => {
         setLoading(true);
