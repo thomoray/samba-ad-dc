@@ -35,6 +35,7 @@ export default function CreateSubnet() {
                     setSuccessAlertVisible(true);
                     setLoading(false);
                     setIsModalOpen(false);
+                    setIsModalOpen(false);
                 })
                 .catch((exception) => {
                     setErrorMessage(exception.message);

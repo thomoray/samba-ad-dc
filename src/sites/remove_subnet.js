@@ -31,12 +31,14 @@ export default function RemoveSubnet() {
                 .done((data) => {
                     setSuccessMessage(data);
                     setSuccessAlertVisible(true);
+                    setIsModalOpen(false)
                     setLoading(false);
                 })
                 .catch((exception) => {
                     setErrorMessage(exception.message);
                     setErrorAlertVisible(true);
                     setLoading(false);
+                    setIsModalOpen(false)
                 });
         script();
     };
