@@ -28,7 +28,7 @@ export default function CreateGroup() {
     };
     const handleSubmit = (e) => {
         setLoading(true);
-        const command = `samba-tool group create ${groupName}`;
+        const command = `samba-tool group add ${groupName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     setSuccessMessage(data);
@@ -57,7 +57,6 @@ export default function CreateGroup() {
                 title="Create A New group"
                 isOpen={isModalOpen}
                 onClose={handleModalToggle}
-                description="A dialog for creating new groups"
                 actions={[
                     <Button key="confirm" variant="primary" onClick={handleSubmit}>
                         Create
