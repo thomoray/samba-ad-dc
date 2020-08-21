@@ -29,7 +29,7 @@ export default function DeleteSite() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        const command = `samba-tool site remove ${siteName}`;
+        const command = `samba-tool sites remove ${siteName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     setSuccessMessage(data);

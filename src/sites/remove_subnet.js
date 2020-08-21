@@ -29,7 +29,7 @@ export default function RemoveSubnet() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        const command = `samba-tool site subnet remove ${subnet}`;
+        const command = `samba-tool sites subnet remove ${subnet}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     setSuccessMessage(data);

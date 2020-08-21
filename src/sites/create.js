@@ -23,13 +23,11 @@ export default function CreateSite() {
     const [successMessage, setSuccessMessage] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleSiteNameChange = (e) => {
-        setSiteName(e);
-    };
+    const handleSiteNameChange = (e) => setSiteName(e);
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        const command = `samba-tool site create ${siteName}`;
+        const command = `samba-tool sites create ${siteName}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })
                 .done((data) => {
                     setSuccessMessage(data);
