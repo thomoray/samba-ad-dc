@@ -119,6 +119,13 @@ export default function Main() {
                                 </Card>
                             </a>
                         </GalleryItem>
+                        <GalleryItem>
+                            <a href="ntacl/ntacl.html" role="link">
+                                <Card isHoverable>
+                                    <CardBody> NT ACLs Manipulation</CardBody>
+                                </Card>
+                            </a>
+                        </GalleryItem>
                     </Gallery>
                 </PageSection>
             </Page>

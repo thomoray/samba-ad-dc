@@ -84,6 +84,10 @@ var info = {
 
         "dsacl/index": [
             "./dsacl/index.js"
+        ],
+
+        "ntacl/index": [
+            "./ntacl/index.js"
         ]
     },
     files: [
@@ -104,6 +108,7 @@ var info = {
         "fsmo/fsmo.html",
         "gpo/gpo.html",
         "dsacl/dsacl.html",
+        "ntacl/ntacl.html",
         "manifest.json",
     ],
 };
