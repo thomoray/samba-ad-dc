@@ -112,6 +112,13 @@ export default function Main() {
                                 </Card>
                             </a>
                         </GalleryItem>
+                        <GalleryItem>
+                            <a href="dsacl/dsacl.html" role="link">
+                                <Card isHoverable>
+                                    <CardBody> DS ACLs Manipulation</CardBody>
+                                </Card>
+                            </a>
+                        </GalleryItem>
                     </Gallery>
                 </PageSection>
             </Page>

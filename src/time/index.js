@@ -30,7 +30,7 @@ export default function ServerTime() {
     const hideAlert = () => setAlertVisible(false);
 
     const getServerTime = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         setLoading(true);
         const command = `samba-tool time ${server}`;
         const script = () => cockpit.script(command, { superuser: true, err: 'message' })

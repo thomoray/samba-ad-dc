@@ -31,13 +31,13 @@ export default function DeleteSite() {
                 .done((data) => {
                     setSuccessMessage(data);
                     setSuccessAlertVisible(true);
-                    setIsModalOpen(false)
+                    setIsModalOpen(false);
                     setLoading(false);
                 })
                 .catch((exception) => {
                     setErrorMessage(exception.message);
                     setErrorAlertVisible(true);
-                    setIsModalOpen(false)
+                    setIsModalOpen(false);
                     setLoading(false);
                 });
         script();

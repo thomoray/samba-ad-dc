@@ -80,6 +80,10 @@ var info = {
 
         "gpo/index": [
             "./gpo/index.js"
+        ],
+
+        "dsacl/index": [
+            "./dsacl/index.js"
         ]
     },
     files: [
@@ -99,6 +103,7 @@ var info = {
         "spn/spn.html",
         "fsmo/fsmo.html",
         "gpo/gpo.html",
+        "dsacl/dsacl.html",
         "manifest.json",
     ],
 };
