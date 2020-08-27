@@ -12,7 +12,6 @@ import {
     Modal
 } from '@patternfly/react-core';
 import cockpit from 'cockpit';
-import './index.css';
 
 export default function DeleteContact() {
     const [contactName, setContactName] = useState("");

@@ -7,7 +7,6 @@ import {
     Button,
     Modal
 } from '@patternfly/react-core';
-import './index.css';
 import {
     Loading,
     SuccessToast,

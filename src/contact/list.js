@@ -7,7 +7,6 @@ import {
     CardFooter,
     CardHeader
 } from '@patternfly/react-core';
-import './index.css';
 
 export default function ListContacts() {
     const [list, setList] = useState();
