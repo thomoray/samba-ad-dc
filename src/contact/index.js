@@ -5,7 +5,7 @@ import Create from './create';
 import List from './list';
 import Show from './show';
 import Delete from './delete';
-import './index.css';
+import Move from './move';
 import { BackButton } from '../common';
 import { Toolbar, ToolbarItem, ToolbarGroup, ToolbarContent } from '@patternfly/react-core';
 import "../lib/patternfly-4-overrides.scss";
@@ -25,6 +25,9 @@ export default function Contact() {
                         </ToolbarItem>
                         <ToolbarItem>
                             <Show />
+                        </ToolbarItem>
+                        <ToolbarItem>
+                            <Move />
                         </ToolbarItem>
                     </ToolbarGroup>
                 </ToolbarContent>
