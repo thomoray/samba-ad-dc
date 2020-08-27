@@ -48,7 +48,7 @@ export default function Move() {
         <>
             {errorAlertVisible && <ErrorToast errorMessage={errorMessage} closeModal={() => setErrorAlertVisible(false)} />}
             {successAlertVisible && <SuccessToast successMessage={successMessage} closeModal={() => setSuccessAlertVisible(false)} />}
-            <Button variant="primary" onClick={handleModalToggle}>
+            <Button variant="secondary" onClick={handleModalToggle}>
                 Move Computer
             </Button>
             <Modal

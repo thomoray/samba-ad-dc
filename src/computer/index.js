@@ -5,6 +5,7 @@ import List from './list';
 import Show from './show';
 import Create from './create';
 import Delete from './delete';
+import Move from './move';
 import { Toolbar, ToolbarItem, ToolbarGroup, ToolbarContent } from '@patternfly/react-core';
 import { BackButton } from '../common';
 import "../lib/patternfly-4-overrides.scss";
@@ -24,6 +25,9 @@ export default function Computer() {
                         </ToolbarItem>
                         <ToolbarItem>
                             <Show />
+                        </ToolbarItem>
+                        <ToolbarItem>
+                            <Move />
                         </ToolbarItem>
                     </ToolbarGroup>
                 </ToolbarContent>
