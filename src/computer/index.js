@@ -7,12 +7,11 @@ import Create from './create';
 import Delete from './delete';
 import { Toolbar, ToolbarItem, ToolbarGroup, ToolbarContent } from '@patternfly/react-core';
 import { BackButton } from '../common';
-import './css/computer.css';
 import "../lib/patternfly-4-overrides.scss";
 
 export default function Computer() {
     return (
-        <div>
+        <>
             <BackButton />
             <Toolbar>
                 <ToolbarContent>
@@ -30,7 +29,7 @@ export default function Computer() {
                 </ToolbarContent>
             </Toolbar>
             <List />
-        </div>
+        </>
     );
 }
 

@@ -12,7 +12,6 @@ import {
     Button
 } from '@patternfly/react-core';
 import cockpit from 'cockpit';
-import './css/computer.css';
 
 export default function Create() {
     const [computerName, setComputerName] = useState("");

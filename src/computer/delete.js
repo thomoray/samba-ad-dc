@@ -12,7 +12,6 @@ import {
     Button
 } from '@patternfly/react-core';
 import cockpit from 'cockpit';
-import './css/computer.css';
 
 export default function Delete() {
     const [computerName, setComputerName] = useState("");

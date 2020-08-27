@@ -10,10 +10,9 @@ import {
     ButtonVariant,
     TextInput
 } from '@patternfly/react-core';
-import './css/computer.css';
 import { SearchIcon } from '@patternfly/react-icons';
 
-function ComputerList() {
+export default function ComputerList() {
     const [computerList, setComputerList] = useState([]);
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
@@ -81,5 +80,3 @@ function ComputerList() {
         </>
     );
 }
-
-export default ComputerList;
