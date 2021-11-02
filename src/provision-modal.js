@@ -103,6 +103,7 @@ function ProvisionModal() {
     const handleSubmit = () => {
         setLoading(true);
         const command = `
+        rm -f /etc/samba/smb.conf
         samba-tool domain provision \
                 --use-rfc2307 \
                 --realm ${realm} \
