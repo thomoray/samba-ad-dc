@@ -2,6 +2,8 @@
 
 A Cockpit plugin for Samba AD DC Management. 
 
+This is a clone of the original repository hosted on Gitlab https://gitlab.com/HezekiahM/samba-ad-dc
+
 # Installing
 
 ## Fedora 32 Installation
